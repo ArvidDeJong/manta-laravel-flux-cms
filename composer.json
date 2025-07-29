@@ -1,0 +1,49 @@
+{
+    "name": "darvis/manta-laravel-flux-cms",
+    "description": "Een Laravel Flux CMS package",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arvid de Jong",
+            "email": "info@arvid.nl"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0",
+        "livewire/livewire": "^3.0",
+        "setasign/fpdi": "^2.4",
+        "setasign/fpdf": "^1.8",
+        "intervention/image": "^3.5",
+        "intervention/image-laravel": "^1.3",
+        "unisharp/laravel-filemanager": "^2.9",
+        "darvis/lemmings": "^1.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Manta\\FluxCMS\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Manta\\FluxCMS\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Manta\\FluxCMS\\FluxCMSServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
