@@ -387,5 +387,20 @@ class FluxCMSServiceProvider extends ServiceProvider
         Livewire::component('manta-cms::staff.reset-password', \Manta\FluxCMS\Livewire\AuthStaff\ResetPassword::class);
         Livewire::component('manta-cms::staff.verify-email', \Manta\FluxCMS\Livewire\AuthStaff\VerifyEmail::class);
         Livewire::component('manta-cms::staff.logout', \Manta\FluxCMS\Livewire\AuthStaff\Logout::class);
+
+        // CMS componenten
+        Livewire::component('manta-cms::cms.alert', \Manta\FluxCMS\Livewire\Cms\CmsAlert::class);
+        Livewire::component('manta-cms::cms.dashboard', \Manta\FluxCMS\Livewire\Cms\CmsDashboard::class);
+        Livewire::component('manta-cms::cms.footer', \Manta\FluxCMS\Livewire\Cms\CmsFooter::class);
+        Livewire::component('manta-cms::cms.module-translations', \Manta\FluxCMS\Livewire\Cms\CmsModuleTranslations::class);
+        Livewire::component('manta-cms::cms.numbers', \Manta\FluxCMS\Livewire\Cms\CmsNumbers::class);
+        Livewire::component('manta-cms::cms.sandbox', \Manta\FluxCMS\Livewire\Cms\CmsSandbox::class);
+
+        // Web componenten
+        Livewire::component('manta-cms::web.dashboard', \Manta\FluxCMS\Livewire\Web\WebDashboard::class);
+
+        // Website componenten
+        Livewire::component('manta-cms::website.inline-editor', \Manta\FluxCMS\Livewire\Website\WebsiteInlineEditor::class);
+        Livewire::component('manta-cms::website.website-translator', \Manta\FluxCMS\Livewire\Website\WebsiteTranslator::class);
     }
 }

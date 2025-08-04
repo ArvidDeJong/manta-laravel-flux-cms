@@ -6,6 +6,27 @@ Part of the [Manta](https://manta.website) ecosystem.
 
 ## ⚡ Quick Start
 
+### Automatic Installation (Recommended)
+
+```bash
+# Install the package
+composer require manta/laravel-manta-cms
+
+# Run the complete installation (includes migrations, seeding, and setup)
+php artisan manta:install --with-migrations
+```
+
+✅ **What this does:**
+- Registers the service provider
+- Publishes configuration files
+- Publishes views and assets
+- Runs database migrations
+- **Creates a default company** (if none exist)
+- Synchronizes routes
+- Clears cache
+
+### Manual Installation
+
 ```bash
 # Install the package
 composer require manta/laravel-manta-cms
@@ -13,6 +34,9 @@ composer require manta/laravel-manta-cms
 # Publish and run migrations
 php artisan vendor:publish --provider="Manta\FluxCMS\FluxCMSServiceProvider"
 php artisan migrate
+
+# Create default company (if needed)
+php artisan manta:seed-company
 
 # Sync routes (optional)
 php artisan manta:sync-routes --prefix=cms

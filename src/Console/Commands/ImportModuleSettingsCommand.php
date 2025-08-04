@@ -31,7 +31,7 @@ class ImportModuleSettingsCommand extends Command
     public function handle()
     {
 
-        // LIK: php artisan manta:import-module-settings darvis/manta-laravel-flux-cms --all
+        // LIKE: php artisan manta:import-module-settings darvis/manta-laravel-flux-cms --all
         $packageName = $this->argument('package');
         $importAll = $this->option('all');
 

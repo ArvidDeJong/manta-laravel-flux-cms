@@ -8,17 +8,41 @@ Installation instructions for the [Manta](https://manta.website) Laravel Flux CM
 - Laravel 12.x
 - Livewire 3.x
 
-## Installation via Composer
+## Quick Installation (Recommended)
 
-You can install this package via Composer:
+The fastest way to get started is using the automated installation command:
+
+```bash
+# Install the package
+composer require manta/laravel-manta-cms
+
+# Run the complete installation
+php artisan manta:install --with-migrations
+```
+
+**What this command does:**
+- Registers the ServiceProvider automatically
+- Publishes configuration files
+- Publishes views and public assets
+- Publishes and runs database migrations
+- **Creates a default company** (if no companies exist)
+- Synchronizes Laravel routes to database
+- Clears all caches
+- Runs composer dump-autoload
+
+## Manual Installation
+
+If you prefer manual control over each step:
+
+### Step 1: Install via Composer
 
 ```bash
 composer require manta/laravel-manta-cms
 ```
 
-## ServiceProvider Registration
+### Step 2: ServiceProvider Registration
 
-After installation, you need to register the ServiceProvider in `config/app.php`:
+Register the ServiceProvider in `config/app.php`:
 
 ```php
 'providers' => [
@@ -27,9 +51,9 @@ After installation, you need to register the ServiceProvider in `config/app.php`
 ],
 ```
 
-## Publishing Files
+### Step 3: Publishing Files
 
-Next, you can publish the configuration, views and migrations:
+Publish the configuration, views and migrations:
 
 ```bash
 # Publish only configuration
@@ -45,7 +69,7 @@ php artisan vendor:publish --provider="Manta\FluxCMS\FluxCMSServiceProvider" --t
 php artisan vendor:publish --provider="Manta\FluxCMS\FluxCMSServiceProvider"
 ```
 
-## Database Setup
+### Step 4: Database Setup
 
 Run the migrations to create the required tables:
 
@@ -53,9 +77,29 @@ Run the migrations to create the required tables:
 php artisan migrate
 ```
 
-## Clear Cache
+### Step 5: Seed Default Company
 
-After installation, it is recommended to clear the cache:
+Create a default company if your database is empty:
+
+```bash
+php artisan manta:seed-company
+```
+
+This command will:
+- Check if companies already exist in the database
+- Create a default company with basic information if none exist
+- Skip creation if companies are already present
+
+**Default company details:**
+- Name: "Default Company"
+- Number: "COMP-001"
+- Address: "Default Street 1, 1000 AA Amsterdam"
+- Country: Netherlands
+- Status: Active
+
+### Step 6: Clear Cache
+
+After installation, clear the cache:
 
 ```bash
 php artisan view:clear

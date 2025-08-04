@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `docs/livewire-components.md` - Livewire 3 components documentation
   - `docs/troubleshooting.md` - Common issues and solutions
   - `docs/development.md` - Development guidelines and contribution guide
+- New Livewire component registrations in FluxCMSServiceProvider:
+  - CMS components: `CmsAlert`, `CmsDashboard`, `CmsFooter`, `CmsModuleTranslations`, `CmsNumbers`, `CmsSandbox`
+  - Web components: `WebDashboard`
+  - Website components: `WebsiteInlineEditor`, `WebsiteTranslator`
 
 ### Changed
 - All Artisan commands renamed to `manta:` prefix for consistency:
@@ -41,6 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All documentation files in `docs/` directory translated to English
   - Project guidelines and development documentation in English
   - Consistent English terminology and professional presentation throughout
+- Livewire component naming updates:
+  - `WebsiteTranslator` component registration renamed to `manta-cms::website.website-translator`
+  - Fixed namespace import in `WebsiteTranslator` from `Manta\Models\Translation` to `Manta\FluxCMS\Models\Translation`
 
 ## [0.1.0] - 2025-07-15
 ### Added

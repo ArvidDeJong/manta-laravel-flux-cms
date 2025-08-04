@@ -4,6 +4,7 @@ namespace Manta\FluxCMS\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Manta\FluxCMS\Database\seeders\CompanySeeder;
 
 class InstallCommand extends Command
 {
@@ -58,6 +59,9 @@ class InstallCommand extends Command
 
         // Step 8: Run composer dump-autoload
         $this->dumpAutoload();
+
+        // Step 9: Seed default company if needed
+        $this->seedDefaultCompany();
 
         $this->info('Flux CMS has been successfully installed!');
         $this->info('You can now view the dashboard at: ' . url(config('manta-cms.prefix', 'cms') . '/dashboard'));
@@ -240,6 +244,30 @@ class InstallCommand extends Command
             $this->info('Composer dump-autoload successfully executed.');
         } else {
             $this->warn('Composer not found. Please manually run "composer dump-autoload" to load the helpers.');
+        }
+    }
+
+    /**
+     * Seed default company if no companies exist
+     */
+    protected function seedDefaultCompany()
+    {
+        $this->info('Checking for default company...');
+
+        try {
+            $seeder = new CompanySeeder();
+            $result = $seeder->run();
+
+            if ($result['action'] === 'created') {
+                $this->info('✓ ' . $result['message']);
+                $this->info('  Company: ' . $result['company']->company);
+                $this->info('  Number: ' . $result['company']->number);
+            } else {
+                $this->info('✓ ' . $result['message']);
+            }
+        } catch (\Exception $e) {
+            $this->warn('Company seeding skipped: ' . $e->getMessage());
+            $this->warn('You can manually run the CompanySeeder later if needed.');
         }
     }
 }

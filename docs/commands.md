@@ -5,6 +5,12 @@ This package contains various handy Artisan commands that you can use for manage
 ## 🎯 Key Commands
 
 ```bash
+# Complete installation with migrations and seeding
+php artisan manta:install --with-migrations
+
+# Seed default company (if none exist)
+php artisan manta:seed-company
+
 # Sync routes
 php artisan manta:sync-routes --prefix=cms
 
@@ -241,19 +247,78 @@ php artisan manta:copy-libraries --force
 
 ## manta:install
 
-Installs and configures the package for first use.
+Installs and configures the package for first use. This is the recommended way to set up the CMS as it handles all necessary steps automatically.
 
 ### Usage
 
 ```bash
+# Complete installation (recommended)
+php artisan manta:install --with-migrations
+
+# Basic installation without migrations
 php artisan manta:install
+
+# Force overwrite existing files
+php artisan manta:install --with-migrations --force
 ```
 
 ### Options
 
 - `--force` : Overwrite existing files
-- `--with-migrations` : Also publish migrations
+- `--with-migrations` : Also publish and run migrations
 - `--skip-provider` : Skip registering the ServiceProvider
+
+### What it does
+
+1. **Registers ServiceProvider** (unless `--skip-provider` is used)
+2. **Publishes configuration files**
+3. **Publishes views and public assets**
+4. **Publishes and runs migrations** (if `--with-migrations` is used)
+5. **Seeds default company** (if no companies exist)
+6. **Synchronizes routes** to database
+7. **Clears all caches**
+8. **Runs composer dump-autoload**
+
+## manta:seed-company
+
+Creates a default company if no companies exist in the database. This is automatically called during `manta:install` but can also be run manually.
+
+### Usage
+
+```bash
+# Seed default company
+php artisan manta:seed-company
+```
+
+### Functionality
+
+The command:
+- Checks if any companies exist in the database
+- If companies exist: Shows count and skips creation
+- If no companies exist: Creates a default company with basic information
+- Returns detailed information about the action taken
+
+**Default company details:**
+- **Name**: "Default Company"
+- **Number**: "COMP-001"
+- **Address**: "Default Street 1, 1000 AA Amsterdam"
+- **Country**: Netherlands (nl)
+- **Phone**: "+31 20 123 4567"
+- **Status**: Active
+- **Created by**: "System"
+
+### Example Output
+
+```bash
+# When no companies exist
+✓ Default company created successfully
+  Company: Default Company
+  Number: COMP-001
+  City: Amsterdam
+
+# When companies already exist
+✓ Found 3 existing companies in database
+```
 
 ## manta:refresh
 
