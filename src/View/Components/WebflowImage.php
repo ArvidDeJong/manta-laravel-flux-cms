@@ -43,6 +43,6 @@ class WebflowImage extends Component
      */
     public function render()
     {
-        return view('manta-flux-cms::components.webflow-image');
+        return view('manta-cms::components.webflow-image');
     }
 }
