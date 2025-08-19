@@ -112,6 +112,25 @@ trait MantaModuleTrait
             $normalizedFields[$key]['max'] = (int)($normalizedFields[$key]['max'] ?? 1);
         }
 
+        // Zorg ervoor dat uploads en maps keys aanwezig zijn
+        if (!isset($normalizedFields['uploads'])) {
+            $normalizedFields['uploads'] = array_merge($defaultFieldStructure, [
+                'title' => 'Uploads',
+                'type' => '',
+                'read' => false,
+                'edit' => false,
+            ]);
+        }
+
+        if (!isset($normalizedFields['maps'])) {
+            $normalizedFields['maps'] = array_merge($defaultFieldStructure, [
+                'title' => 'Google Maps',
+                'type' => '',
+                'read' => false,
+                'edit' => false,
+            ]);
+        }
+
         return $normalizedFields;
     }
 

@@ -5,11 +5,11 @@ namespace Manta\FluxCMS\Traits;
 use Flux\Flux;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
-use Manta\FluxCMS\Models\Option;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Url;
+use Manta\FluxCMS\Models\Option;
 
 trait MantaTrait
 {
@@ -24,41 +24,23 @@ trait MantaTrait
     #[Url]
     public ?string $search = '';
 
-    public array $breadcrumb = [];
-
     #[Url]
     public ?string $tablistShow = 'general';
 
+    public array $breadcrumb = [];
     public array $tablist = [];
-
-    public function updatedTablistShow($value)
-    {
-        // Sla de tabkeuze op in een cookie (30 dagen geldig)
-        cookie()->queue('manta_tablist_show', $value, 60 * 24 * 30);
-    }
-
-    protected function initializeTablistShow()
-    {
-        // Als er geen tablistShow waarde is ingesteld (via URL), probeer deze uit de cookie te halen
-        if (!request()->has('tablistShow') && cookie()->has('manta_tablist_show')) {
-            $this->tablistShow = cookie()->get('manta_tablist_show');
-        }
-    }
-
     public ?string $tablistModuleShow = 'general';
     public array $tablistModule = [];
+    public string $breadcumbHomeName = 'Dashboard';
 
     public ?string $route_prefix = 'manta-cms';
     public ?string $route_name = null;
     public ?string $route_list = null;
 
     public ?string $tab_title = null;
-    public ?int $trashed = null;
-    public ?string $deleteId = null;
     public ?string $moduleClass = null;
     public array $locale_info = [];
     public array $config = [];
-    public string $breadcumbHomeName = 'Dashboard';
     public array $fields = [];
     public array $settings = [];
 
@@ -67,23 +49,33 @@ trait MantaTrait
     public array $data_content = [];
     public array $data_fields = [];
 
+    public ?int $trashed = null;
+    public ?string $deleteId = null;
+
     public ?string $openaiSubject = null;
     public ?string $openaiDescription = null;
+    public function updatedTablistShow($value)
+    {
+        cookie()->queue('manta_tablist_show', $value, 60 * 24 * 30);
+    }
 
+    protected function initializeTablistShow()
+    {
+        if (!request()->has('tablistShow') && cookie()->has('manta_tablist_show')) {
+            $this->tablistShow = cookie()->get('manta_tablist_show');
+        }
+    }
     public function getLocaleInfo()
     {
         $this->locale = $this->locale ?? getLocaleManta();
-
         $locales = getLocalesManta();
 
-        // Zoek de locale die overeenkomt met de huidige locale of de standaard locale
         $this->locale_info = collect($locales)->firstWhere('locale', $this->locale)
             ?? collect($locales)->firstWhere('locale', getLocaleManta())
-            ?? ['locale' => 'nl', 'class' => 'fi-nl', 'title' => 'Nederlands']; // Fallback naar Nederlands
+            ?? ['locale' => 'nl', 'class' => 'fi-nl', 'title' => 'Nederlands'];
 
         $this->locale = $this->locale_info['locale'];
     }
-
     public function getBreadcrumb($type = null, $options = [])
     {
         $titles = [
@@ -190,29 +182,36 @@ trait MantaTrait
             }
         }
         if ($this->itemOrg && isset($this->fields['uploads']) && $this->fields['uploads']['active'] == true) {
-
-            $tablist[] = [
-                'name' => 'Uploads',
-                'title' => 'Uploads',
-                'badge' =>  count($this->itemOrg->uploads),
-                'tablistShow' => 'Uploads',
-                'url' => route($this->route_prefix  . $this->route_name . '.upload', [$this->route_name => $this->itemOrg]),
-                'active' => (Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.upload'),
-            ];
-            if ((Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.upload')) {
-                $this->tablistModuleShow = 'Uploads';
+            $uploadRouteName = $this->route_prefix . $this->route_name . '.upload';
+            
+            if (Route::has($uploadRouteName)) {
+                $tablist[] = [
+                    'name' => 'Uploads',
+                    'title' => 'Uploads',
+                    'badge' =>  count($this->itemOrg->uploads),
+                    'tablistShow' => 'Uploads',
+                    'url' => route($uploadRouteName, [$this->route_name => $this->itemOrg]),
+                    'active' => (Route::currentRouteName() == $uploadRouteName),
+                ];
+                if ((Route::currentRouteName() == $uploadRouteName)) {
+                    $this->tablistModuleShow = 'Uploads';
+                }
             }
         }
         if ($this->itemOrg && isset($this->fields['maps']) && $this->fields['maps']['active'] == true) {
-            $tablist[] = [
-                'name' => 'Maps',
-                'title' => 'Google maps',
-                'tablistShow' => 'Maps',
-                'url' => route($this->route_prefix  . $this->route_name . '.maps', [$this->route_name => $this->itemOrg]),
-                'active' => (Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.maps'),
-            ];
-            if ((Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.maps')) {
-                $this->tablistModuleShow = 'Maps';
+            $mapsRouteName = $this->route_prefix . $this->route_name . '.maps';
+            
+            if (Route::has($mapsRouteName)) {
+                $tablist[] = [
+                    'name' => 'Maps',
+                    'title' => 'Google maps',
+                    'tablistShow' => 'Maps',
+                    'url' => route($mapsRouteName, [$this->route_name => $this->itemOrg]),
+                    'active' => (Route::currentRouteName() == $mapsRouteName),
+                ];
+                if ((Route::currentRouteName() == $mapsRouteName)) {
+                    $this->tablistModuleShow = 'Maps';
+                }
             }
         }
 
@@ -262,14 +261,10 @@ trait MantaTrait
 
     protected function deleteChildItems($id)
     {
-        // Vind alle child items
         $children = $this->moduleClass::where('pid', $id)->get();
 
         foreach ($children as $child) {
-            // Recursief verwijderen van sub-items
             $this->deleteChildItems($child->id);
-
-            // Update en verwijder het child item
             $child->update(['deleted_by' => auth('staff')->user()->name]);
             $child->delete();
         }
@@ -278,11 +273,7 @@ trait MantaTrait
     public function deleteConfirm($id)
     {
         Flux::modals()->close();
-
-        // Eerst alle child items verwijderen
         $this->deleteChildItems($id);
-
-        // Daarna het hoofditem verwijderen
         $this->moduleClass::where('id', $id)->update(['deleted_by' => auth('staff')->user()->name]);
         $this->moduleClass::find($id)->delete();
     }
