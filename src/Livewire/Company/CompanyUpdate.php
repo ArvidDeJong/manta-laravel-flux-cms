@@ -2,6 +2,7 @@
 
 namespace Manta\FluxCMS\Livewire\Company;
 
+use Flux\Flux;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
@@ -116,6 +117,6 @@ class CompanyUpdate extends Component
 
         $this->item->update($row);
 
-        return $this->redirect(CompanyList::class);
+        Flux::toast('Opgeslagen', duration: 1000, variant: 'success');
     }
 }

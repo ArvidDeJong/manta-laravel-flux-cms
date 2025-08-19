@@ -15,7 +15,6 @@ use Manta\FluxCMS\Console\Commands\ImportModuleSettingsCommand;
 use Manta\FluxCMS\Console\Commands\InstallCommand;
 use Manta\FluxCMS\Console\Commands\RefreshCommand;
 use Manta\FluxCMS\Console\Commands\SeedCompanyCommand;
-use Manta\FluxCMS\Console\Commands\SeedCompanyNavigationCommand;
 use Manta\FluxCMS\Console\Commands\SeedNavigationCommand;
 use Manta\FluxCMS\Console\Commands\SyncRoutesCommand;
 use Manta\FluxCMS\Livewire\Dashboard;
@@ -126,7 +125,6 @@ class FluxCMSServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 RefreshCommand::class,
                 SeedCompanyCommand::class,
-                SeedCompanyNavigationCommand::class,
                 SeedNavigationCommand::class,
                 SyncRoutesCommand::class,
             ]);
@@ -413,5 +411,11 @@ class FluxCMSServiceProvider extends ServiceProvider
         // Website componenten
         Livewire::component('manta-cms::website.inline-editor', \Manta\FluxCMS\Livewire\Website\WebsiteInlineEditor::class);
         Livewire::component('manta-cms::website.website-translator', \Manta\FluxCMS\Livewire\Website\WebsiteTranslator::class);
+
+        // MantaModule componenten
+        Livewire::component('manta-cms::manta-module.list', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleList::class);
+        Livewire::component('manta-cms::manta-module.create', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleCreate::class);
+        Livewire::component('manta-cms::manta-module.update', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleUpdate::class);
+        Livewire::component('manta-cms::manta-module.read', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleRead::class);
     }
 }

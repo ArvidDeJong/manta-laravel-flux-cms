@@ -1,6 +1,6 @@
 <flux:main container>
     <x-manta.breadcrumb :$breadcrumb />
-    <div class="flex items-center justify-between mt-4">
+    <div class="mt-4 flex items-center justify-between">
         <div>
             <flux:modal.trigger name="edit-profile">
                 <flux:button icon="plus">
@@ -16,17 +16,18 @@
                     <form wire:submit.prevent="store">
                         <flux:input label="Titel" placeholder="Titel" wire:model="title" />
                         <flux:select label="Type" placeholder="Type" wire:model.live="type">
-                            <option value="">Selecteer een type</option>
-                            <option value="module">Modules</option>
-                            <option value="webshop">Webshop</option>
-                            <option value="tool">Tools</option>
-                            <option value="dev">Dev</option>
+                            <flux:select.option value="">Selecteer een type</flux:select.option>
+                            <flux:select.option value="module">Modules</flux:select.option>
+                            <flux:select.option value="webshop">Webshop</flux:select.option>
+                            <flux:select.option value="tool">Tools</flux:select.option>
+                            <flux:select.option value="dev">Dev</flux:select.option>
                         </flux:select>
                         @if (!$url)
                             <flux:select label="Route" placeholder="Route" wire:model.live="route">
-                                <option value="">Selecteer een route</option>
+                                <flux:select.option value="">Selecteer een route</flux:select.option>
                                 @foreach ($routes as $route)
-                                    <option value="{{ $route->name }}">{{ $route->name }}</option>
+                                    <flux:select.option value="{{ $route->name }}">{{ $route->name }}
+                                    </flux:select.option>
                                 @endforeach
                             </flux:select>
                         @endif
@@ -86,7 +87,7 @@
                         <div class="font-medium">{{ $item->title }}</div>
                         @if ($item->pid)
                             <div class="text-sm text-gray-500">
-                                <flux:icon name="arrow-turn-down-right" class="inline w-3 h-3" />
+                                <flux:icon name="arrow-turn-down-right" class="inline h-3 w-3" />
                                 Submenu van: {{ $item->parent?->title }}
                             </div>
                         @endif
@@ -98,14 +99,14 @@
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($item->route)
-                            <code class="px-2 py-1 text-sm bg-gray-100 rounded">{{ $item->route }}</code>
+                            <code class="rounded bg-gray-100 px-2 py-1 text-sm">{{ $item->route }}</code>
                         @endif
                     </flux:table.cell>
                     <flux:table.cell>
                         @if ($item->url)
                             <a href="{{ $item->url }}" target="_blank" class="text-blue-600 hover:underline">
                                 {{ Str::limit($item->url, 30) }}
-                                <flux:icon name="arrow-top-right-on-square" class="inline w-3 h-3 ml-1" />
+                                <flux:icon name="arrow-top-right-on-square" class="ml-1 inline h-3 w-3" />
                             </a>
                         @endif
                     </flux:table.cell>

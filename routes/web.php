@@ -28,6 +28,11 @@ Route::middleware(['web', 'auth:staff'])->prefix(config('manta-cms.routes.prefix
         Route::get('/gebruikers/aanpassen/{user}', \Manta\FluxCMS\Livewire\User\UserUpdate::class)->name('user.update');
         Route::get('/gebruikers/bekijken/{user}', \Manta\FluxCMS\Livewire\User\UserRead::class)->name('user.read');
 
+        Route::get('/modules', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleList::class)->name('manta-module.list');
+        Route::get('/modules/create', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleCreate::class)->name('manta-module.create');
+        Route::get('/modules/{mantaModule}/aanpassen', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleUpdate::class)->name('manta-module.update');
+        Route::get('/modules/{mantaModule}/bekijken', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleRead::class)->name('manta-module.read');
+
         Route::get("/upload", \Manta\FluxCMS\Livewire\Upload\UploadList::class)->name('upload.list');
         Route::get("/upload/toevoegen", \Manta\FluxCMS\Livewire\Upload\UploadCreate::class)->name('upload.create');
         Route::get("/upload/dropzone", \Manta\FluxCMS\Livewire\Upload\UploadDropzone::class)->name('upload.dropzone');

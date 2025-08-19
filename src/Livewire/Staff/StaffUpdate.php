@@ -2,6 +2,7 @@
 
 namespace Manta\FluxCMS\Livewire\Staff;
 
+use Flux\Flux;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
@@ -98,6 +99,6 @@ class StaffUpdate extends Component
 
         $this->item->update($row);
 
-        return $this->redirect(StaffList::class);
+        Flux::toast('Opgeslagen', duration: 1000, variant: 'success');
     }
 }

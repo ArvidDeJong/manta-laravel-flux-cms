@@ -17,6 +17,8 @@ trait MantaTrait
     public $id;
 
     public ?string $slug = null;
+
+    #[Url]
     public string $show = 'active';
 
     #[Url]

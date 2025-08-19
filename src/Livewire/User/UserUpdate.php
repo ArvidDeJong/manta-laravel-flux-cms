@@ -98,9 +98,7 @@ class UserUpdate extends Component
             'comments',
         );
         User::where('id', $this->id)->update($row);
-        // $this->toastr('success', 'Gebruiker toegevoegd');
 
-        // return redirect()->to(route('manta-cms.user.llist'));
         Flux::toast('Opgeslagen', duration: 1000, variant: 'success');
     }
 }
