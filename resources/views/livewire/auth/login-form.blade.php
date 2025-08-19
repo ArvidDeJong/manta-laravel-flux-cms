@@ -33,7 +33,7 @@
             <flux:heading class="text-center" size="xl">Welkom terug</flux:heading>
 
             <div class="flex flex-col gap-6">
-                <flux:input label="E-mailadres" type="email" wire:model.blur="email" placeholder="email@voorbeeld.nl"
+                <flux:input label="E-mailadres" type="email" wire:model="email" placeholder="email@voorbeeld.nl"
                     error="{{ $errors->first('email') }}" />
 
                 <flux:field>
@@ -44,7 +44,7 @@
                             vergeten?</flux:link>
                     </div>
 
-                    <flux:input type="password" wire:model.blur="password" placeholder="Je wachtwoord"
+                    <flux:input type="password" wire:model="password" placeholder="Je wachtwoord" viewable
                         error="{{ $errors->first('password') }}" />
                 </flux:field>
 

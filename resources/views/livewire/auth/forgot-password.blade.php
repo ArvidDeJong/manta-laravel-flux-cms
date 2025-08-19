@@ -37,7 +37,7 @@
             </flux:subheading>
 
             <div class="flex flex-col gap-6">
-                <flux:input label="E-mailadres" type="email" wire:model.blur="email" placeholder="email@voorbeeld.nl"
+                <flux:input label="E-mailadres" type="email" wire:model="email" placeholder="email@voorbeeld.nl"
                     error="{{ $errors->first('email') }}" />
 
                 <div class="flex flex-col space-y-3">

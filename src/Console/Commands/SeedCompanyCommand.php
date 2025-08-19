@@ -12,33 +12,49 @@ class SeedCompanyCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'manta:seed-company';
+    protected $signature = 'manta:seed-company {--count=1 : Number of additional companies to generate}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Seed a default company if no companies exist in the database';
+    protected $description = 'Seed a default company and optionally generate additional companies';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $this->info('Running Company Seeder...');
+        $count = (int) $this->option('count');
+        
+        if ($count < 1) {
+            $this->error('Count must be at least 1');
+            return 1;
+        }
+
+        $this->info("Running Company Seeder (generating {$count} companies)...");
 
         try {
             $seeder = new CompanySeeder();
-            $result = $seeder->run();
+            $result = $seeder->run($count);
 
             if ($result['action'] === 'created') {
                 $this->info('✓ ' . $result['message']);
-                $this->info('  Company: ' . $result['company']->company);
-                $this->info('  Number: ' . $result['company']->number);
-                $this->info('  City: ' . $result['company']->city);
+                
+                // Show details of created companies
+                if (isset($result['companies'])) {
+                    foreach ($result['companies'] as $company) {
+                        $this->info("  📢 {$company->company} ({$company->number}) - {$company->city}");
+                    }
+                } elseif (isset($result['company'])) {
+                    $this->info("  📢 {$result['company']->company} ({$result['company']->number}) - {$result['company']->city}");
+                }
             } else {
                 $this->info('✓ ' . $result['message']);
+                if ($count > 1) {
+                    $this->info("💡 Use --count={$count} to generate {$count} additional companies anyway");
+                }
             }
 
             return 0;

@@ -1,15 +1,16 @@
-<div class="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+<div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
     <x-manta.breadcrumb :$breadcrumb />
     @include('manta-cms::livewire.default.manta-default-tabs', [
         'tabs' => $tablistModule,
         'tablistShow' => $tablistModuleShow,
     ])
+
     <div class="mt-8"></div>
     @if (!$item)
         <x-manta.alert type="warning" title="Het item bestaat nog niet" />
-        <x-manta.buttons.large type="add" :href="route($this->route_name . '.create', ['pid' => $pid, 'locale' => $locale])" />
+        <x-manta.buttons.large type="add" :href="route($this->route_prefix . $this->route_name . '.create', ['pid' => $pid, 'locale' => $locale])" />
     @else
-        <x-manta.buttons.large type="edit" :href="route($this->route_name . '.update', [$this->route_name => $item])" />
+        <x-manta.buttons.large type="edit" :href="route($this->route_prefix . $this->route_name . '.update', [$this->route_name => $item])" />
         <p>&nbsp;</p>
 
         @foreach ($fields as $key => $value)

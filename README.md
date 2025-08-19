@@ -13,10 +13,27 @@ Part of the [Manta](https://manta.website) ecosystem.
 composer require manta/laravel-manta-cms
 
 # Run the complete installation (includes migrations, seeding, and setup)
-php artisan manta:install --with-migrations
+php artisan manta:install --with-migrations --force
+```
+
+```bash
+php artisan manta:import-module-settings darvis/manta-vacancy --all
+```
+
+# Voor de vacancy module zelf
+
+php artisan manta:import-module-settings darvis/manta-vacancy --settings-file=export/settings-vacancy.php
+
+# Voor vacancy reactions
+
+php artisan manta:import-module-settings darvis/manta-vacancy --settings-file=export/settings-vacancyreaction.php
+
+```bash
+php artisan manta-vacancy:seed --with-navigation --force
 ```
 
 ✅ **What this does:**
+
 - Registers the service provider
 - Publishes configuration files
 - Publishes views and assets
@@ -37,6 +54,9 @@ php artisan migrate
 
 # Create default company (if needed)
 php artisan manta:seed-company
+
+# Create default staff user (if needed)
+php artisan manta:create-staff --email=staff@example.com --password=StaffPassword123
 
 # Sync routes (optional)
 php artisan manta:sync-routes --prefix=cms

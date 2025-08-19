@@ -1,62 +1,60 @@
 <div>
-    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="flex min-h-screen items-center justify-center bg-gray-100">
         <div class="w-full max-w-md">
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <x-flux::heading level="1" class="text-center mb-6">
-                    {{ __('Wachtwoord resetten') }}
-                </x-flux::heading>
+            <flux:card class="p-8">
+                <div class="mb-8 text-center">
+                    <flux:heading size="xl" level="1" class="mb-2">Wachtwoord resetten</flux:heading>
+                    <flux:text class="text-gray-600">Voer je nieuwe wachtwoord in om toegang te herstellen</flux:text>
+                </div>
 
                 <form wire:submit="resetPassword">
+                    <input type="hidden" wire:model="token">
+                    
                     <div class="space-y-6">
-                        <input type="hidden" wire:model="token">
+                        <flux:input
+                            wire:model="email"
+                            label="E-mailadres"
+                            type="email"
+                            placeholder="je@email.nl"
+                            icon="at-symbol"
+                            autofocus
+                        />
 
-                        <div>
-                            <x-flux::input
-                                label="{{ __('E-mail') }}"
-                                name="email"
-                                type="email"
-                                wire:model="email"
-                                required
-                                autofocus
-                            />
-                            @error('email') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
-                        </div>
+                        <flux:input
+                            wire:model="password"
+                            label="Nieuw wachtwoord"
+                            type="password"
+                            placeholder="Minimaal 8 karakters"
+                            icon="lock-closed"
+                            viewable
+                        />
 
-                        <div>
-                            <x-flux::input
-                                label="{{ __('Nieuw wachtwoord') }}"
-                                name="password"
-                                type="password"
-                                wire:model="password"
-                                required
-                            />
-                            @error('password') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
-                        </div>
+                        <flux:input
+                            wire:model="password_confirmation"
+                            label="Bevestig wachtwoord"
+                            type="password"
+                            placeholder="Herhaal je nieuwe wachtwoord"
+                            icon="lock-closed"
+                        />
 
-                        <div>
-                            <x-flux::input
-                                label="{{ __('Bevestig wachtwoord') }}"
-                                name="password_confirmation"
-                                type="password"
-                                wire:model="password_confirmation"
-                                required
-                            />
-                        </div>
-
-                        <div>
-                            <x-flux::button type="submit" class="w-full">
-                                {{ __('Wachtwoord resetten') }}
-                            </x-flux::button>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <a href="{{ route('flux-cms.staff.login') }}" class="text-blue-600 hover:underline">
-                                {{ __('Terug naar inloggen') }}
-                            </a>
+                        <flux:button 
+                            type="submit" 
+                            variant="primary" 
+                            class="w-full"
+                            icon="key"
+                        >
+                            Wachtwoord resetten
+                        </flux:button>
+                        
+                        <div class="text-center">
+                            <flux:link href="{{ route('flux-cms.staff.login') }}" class="inline-flex items-center gap-2 text-sm">
+                                <flux:icon name="arrow-left" class="h-4 w-4" />
+                                Terug naar inloggen
+                            </flux:link>
                         </div>
                     </div>
                 </form>
-            </div>
+            </flux:card>
         </div>
     </div>
 </div>

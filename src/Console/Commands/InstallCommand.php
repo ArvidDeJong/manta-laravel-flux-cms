@@ -5,6 +5,8 @@ namespace Manta\FluxCMS\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 use Manta\FluxCMS\Database\seeders\CompanySeeder;
+use Manta\FluxCMS\Database\seeders\MantaNavSeeder;
+use Manta\FluxCMS\Database\seeders\StaffSeeder;
 
 class InstallCommand extends Command
 {
@@ -60,8 +62,8 @@ class InstallCommand extends Command
         // Step 8: Run composer dump-autoload
         $this->dumpAutoload();
 
-        // Step 9: Seed default company if needed
-        $this->seedDefaultCompany();
+        // Step 9: Seed database with default data
+        $this->seedDatabase();
 
         $this->info('Flux CMS has been successfully installed!');
         $this->info('You can now view the dashboard at: ' . url(config('manta-cms.prefix', 'cms') . '/dashboard'));
@@ -248,6 +250,27 @@ class InstallCommand extends Command
     }
 
     /**
+     * Seed database with default data
+     */
+    protected function seedDatabase()
+    {
+        $this->info('Seeding database with default data...');
+
+        // Seed default company
+        $this->seedDefaultCompany();
+
+        // Seed navigation items
+        $this->seedNavigation();
+
+        // Seed staff user (optionally)
+        if ($this->confirm('Do you want to create a default staff user?', true)) {
+            $this->seedStaffUser();
+        }
+
+        $this->info('Database seeding completed.');
+    }
+
+    /**
      * Seed default company if no companies exist
      */
     protected function seedDefaultCompany()
@@ -268,6 +291,50 @@ class InstallCommand extends Command
         } catch (\Exception $e) {
             $this->warn('Company seeding skipped: ' . $e->getMessage());
             $this->warn('You can manually run the CompanySeeder later if needed.');
+        }
+    }
+
+    /**
+     * Seed navigation items
+     */
+    protected function seedNavigation()
+    {
+        $this->info('Seeding navigation items...');
+
+        try {
+            $seeder = new MantaNavSeeder();
+            $seeder->run();
+            $this->info('✓ Navigation items seeded successfully.');
+            
+            // Seed company navigation item
+            $this->call('manta:seed-company-navigation');
+        } catch (\Exception $e) {
+            $this->warn('Navigation seeding skipped: ' . $e->getMessage());
+            $this->warn('You can manually run the MantaNavSeeder later if needed.');
+        }
+    }
+
+    /**
+     * Seed default staff user
+     */
+    protected function seedStaffUser()
+    {
+        $this->info('Creating default staff user...');
+
+        try {
+            $email = $this->ask('Staff email address', 'admin@example.com');
+            $password = $this->secret('Staff password (leave empty for auto-generated)');
+            
+            $seeder = new StaffSeeder();
+            $result = $seeder->run($email, $password ?: null);
+
+            $this->info('✓ Staff user created successfully:');
+            $this->info('  Email: ' . $result['email']);
+            $this->info('  Password: ' . $result['password']);
+            $this->warn('Please save these credentials in a secure location!');
+        } catch (\Exception $e) {
+            $this->warn('Staff user seeding skipped: ' . $e->getMessage());
+            $this->warn('You can manually run the StaffSeeder later if needed.');
         }
     }
 }

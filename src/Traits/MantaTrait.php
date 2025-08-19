@@ -46,6 +46,8 @@ trait MantaTrait
     public ?string $tablistModuleShow = 'general';
     public array $tablistModule = [];
 
+    public ?string $route_prefix = 'manta-cms';
+    public ?string $route_name = null;
     public ?string $route_list = null;
 
     public ?string $tab_title = null;
@@ -156,7 +158,7 @@ trait MantaTrait
             $this->tablistModuleShow = 'Toevoegen';
         } else if ($this->itemOrg && count($locales) > 1 && isset($this->fields['locale']['active']) && $this->fields['locale']['active'] == true) {
             foreach ($locales as $value) {
-                $active = Route::currentRouteName() == $this->route_name . '.upload'
+                $active = Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.upload'
                     ? false
                     : ($this->locale == $value['locale']);
 
@@ -164,7 +166,7 @@ trait MantaTrait
                     'name' => $value['locale'],
                     'title' => $value['title'],
                     'tablistShow' => $value['locale'],
-                    'url' => route($this->route_name . '.read', [$this->route_name => $this->itemOrg, 'locale' => $value['locale']]),
+                    'url' => route($this->route_prefix  . $this->route_name . '.read', [$this->route_name => $this->itemOrg, 'locale' => $value['locale']]),
                     'active' => $active,
                 ];
                 if ($active) {
@@ -177,7 +179,7 @@ trait MantaTrait
                 'name' => $this->tab_title ? $this->itemOrg->$tab_title : $this->itemOrg->title,
                 'title' => $this->tab_title ? $this->itemOrg->$tab_title : $this->itemOrg->title,
                 'tablistShow' => $this->tab_title ? $this->itemOrg->$tab_title : $this->itemOrg->title,
-                'url' => route($this->route_name . '.read', [$this->route_name => $this->itemOrg]),
+                'url' => route($this->route_prefix  . $this->route_name . '.read', [$this->route_name => $this->itemOrg]),
                 'active' => in_array(Route::currentRouteName(), [$this->route_name . '.update', $this->route_name . '.read']),
             ];
 
@@ -192,10 +194,10 @@ trait MantaTrait
                 'title' => 'Uploads',
                 'badge' =>  count($this->itemOrg->uploads),
                 'tablistShow' => 'Uploads',
-                'url' => route($this->route_name . '.upload', [$this->route_name => $this->itemOrg]),
-                'active' => (Route::currentRouteName() == $this->route_name . '.upload'),
+                'url' => route($this->route_prefix  . $this->route_name . '.upload', [$this->route_name => $this->itemOrg]),
+                'active' => (Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.upload'),
             ];
-            if ((Route::currentRouteName() == $this->route_name . '.upload')) {
+            if ((Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.upload')) {
                 $this->tablistModuleShow = 'Uploads';
             }
         }
@@ -204,10 +206,10 @@ trait MantaTrait
                 'name' => 'Maps',
                 'title' => 'Google maps',
                 'tablistShow' => 'Maps',
-                'url' => route($this->route_name . '.maps', [$this->route_name => $this->itemOrg]),
-                'active' => (Route::currentRouteName() == $this->route_name . '.maps'),
+                'url' => route($this->route_prefix  . $this->route_name . '.maps', [$this->route_name => $this->itemOrg]),
+                'active' => (Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.maps'),
             ];
-            if ((Route::currentRouteName() == $this->route_name . '.maps')) {
+            if ((Route::currentRouteName() == $this->route_prefix  . $this->route_name . '.maps')) {
                 $this->tablistModuleShow = 'Maps';
             }
         }

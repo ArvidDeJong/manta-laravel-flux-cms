@@ -33,14 +33,14 @@
             <flux:heading class="text-center" size="xl">Nieuw wachtwoord instellen</flux:heading>
 
             <div class="flex flex-col gap-6">
-                <flux:input label="E-mailadres" type="email" wire:model.blur="email" placeholder="email@voorbeeld.nl"
+                <flux:input label="E-mailadres" type="email" wire:model="email" placeholder="email@voorbeeld.nl"
                     error="{{ $errors->first('email') }}" readonly />
 
-                <flux:input label="Nieuw wachtwoord" type="password" wire:model.blur="password"
+                <flux:input label="Nieuw wachtwoord" type="password" wire:model="password" viewable
                     placeholder="Minimaal 8 tekens" error="{{ $errors->first('password') }}" />
 
-                <flux:input label="Bevestig nieuw wachtwoord" type="password" wire:model.blur="password_confirmation"
-                    placeholder="Herhaal wachtwoord" error="{{ $errors->first('password_confirmation') }}" />
+                <flux:input label="Bevestig nieuw wachtwoord" type="password" wire:model="password_confirmation"
+                    placeholder="Herhaal wachtwoord" error="{{ $errors->first('password_confirmation') }}" viewable />
 
                 <flux:button variant="primary" class="w-full" wire:click="resetPassword" wire:loading.attr="disabled">
                     <span wire:loading.remove>Wachtwoord resetten</span>

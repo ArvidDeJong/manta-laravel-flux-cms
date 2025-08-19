@@ -11,21 +11,22 @@ Route::middleware(['web', 'auth:staff'])->prefix(config('manta-cms.routes.prefix
         Route::get('/manta-nav', \Manta\FluxCMS\Livewire\MantaNav\MantaNavList::class)->name('manta-nav.list');
 
         Route::get('/', \Manta\FluxCMS\Livewire\Dashboard::class)->name('dashboard');
-        Route::get('/staff', \Manta\FluxCMS\Livewire\Staff\StaffList::class)->name('staff.list');
-        Route::get('/staff/create', \Manta\FluxCMS\Livewire\Staff\StaffCreate::class)->name('staff.create');
-        Route::get('/staff/{staff}/rights', \Manta\FluxCMS\Livewire\Staff\StaffRights::class)->name('staff.rights');
-        Route::get('/staff/{staff}/update', \Manta\FluxCMS\Livewire\Staff\StaffUpdate::class)->name('staff.update');
-        Route::get('/staff/{staff}/bekijken', \Manta\FluxCMS\Livewire\Staff\StaffRead::class)->name('staff.read');
+        Route::get('/medewerkers', \Manta\FluxCMS\Livewire\Staff\StaffList::class)->name('staff.list');
+        Route::get('/medewerkers/create', \Manta\FluxCMS\Livewire\Staff\StaffCreate::class)->name('staff.create');
+        Route::get('/medewerkers/{staff}/rights', \Manta\FluxCMS\Livewire\Staff\StaffRights::class)->name('staff.rights');
+        Route::get('/medewerkers/{staff}/update', \Manta\FluxCMS\Livewire\Staff\StaffUpdate::class)->name('staff.update');
+        Route::get('/medewerkers/{staff}/bekijken', \Manta\FluxCMS\Livewire\Staff\StaffRead::class)->name('staff.read');
 
-        Route::get('/company', \Manta\FluxCMS\Livewire\Company\CompanyList::class)->name('company.list');
-        Route::get('/company/create', \Manta\FluxCMS\Livewire\Company\CompanyCreate::class)->name('company.create');
-        Route::get('/company/{company}/update', \Manta\FluxCMS\Livewire\Company\CompanyUpdate::class)->name('company.update');
-        Route::get('/company/{company}/bekijken', \Manta\FluxCMS\Livewire\Company\CompanyRead::class)->name('company.read');
+        Route::get('/bedrijven', \Manta\FluxCMS\Livewire\Company\CompanyList::class)->name('company.list');
+        Route::get('/bedrijven/create', \Manta\FluxCMS\Livewire\Company\CompanyCreate::class)->name('company.create');
+        Route::get('/bedrijven/{company}/update', \Manta\FluxCMS\Livewire\Company\CompanyUpdate::class)->name('company.update');
+        Route::get('/bedrijven/{company}/bekijken', \Manta\FluxCMS\Livewire\Company\CompanyRead::class)->name('company.read');
+        Route::get('/bedrijven/{company}/upload', \Manta\FluxCMS\Livewire\Company\CompanyUpload::class)->name('company.upload');
 
-        Route::get('/user', \Manta\FluxCMS\Livewire\User\UserList::class)->name('user.list');
-        Route::get('/user/toevoegen', \Manta\FluxCMS\Livewire\User\UserCreate::class)->name('user.create');
-        Route::get('/user/aanpassen/{user}', \Manta\FluxCMS\Livewire\User\UserUpdate::class)->name('user.update');
-        Route::get('/user/bekijken/{user}', \Manta\FluxCMS\Livewire\User\UserRead::class)->name('user.read');
+        Route::get('/gebruikers', \Manta\FluxCMS\Livewire\User\UserList::class)->name('user.list');
+        Route::get('/gebruikers/toevoegen', \Manta\FluxCMS\Livewire\User\UserCreate::class)->name('user.create');
+        Route::get('/gebruikers/aanpassen/{user}', \Manta\FluxCMS\Livewire\User\UserUpdate::class)->name('user.update');
+        Route::get('/gebruikers/bekijken/{user}', \Manta\FluxCMS\Livewire\User\UserRead::class)->name('user.read');
 
         Route::get("/upload", \Manta\FluxCMS\Livewire\Upload\UploadList::class)->name('upload.list');
         Route::get("/upload/toevoegen", \Manta\FluxCMS\Livewire\Upload\UploadCreate::class)->name('upload.create');
@@ -47,7 +48,11 @@ Route::middleware('web')
     ->name('flux-cms.')
     ->group(function () {
         Route::get('/staff/login', \Manta\FluxCMS\Livewire\AuthStaff\LoginForm::class)->name('staff.login');
-        Route::get('/staff/register', \Manta\FluxCMS\Livewire\AuthStaff\Register::class)->name('staff.register');
+
+        // Alias voor auth middleware redirect
+        Route::get('/login', function () {
+            return redirect()->route('flux-cms.staff.login');
+        })->name('login');
         Route::get('/staff/forgot-password', \Manta\FluxCMS\Livewire\AuthStaff\ForgotPassword::class)->name('staff.forgot-password');
         Route::get('/staff/reset-password', \Manta\FluxCMS\Livewire\AuthStaff\ResetPassword::class)->name('staff.reset-password');
         Route::get('/staff/verify-email', \Manta\FluxCMS\Livewire\AuthStaff\VerifyEmail::class)->name('staff.verify-email');
@@ -55,7 +60,7 @@ Route::middleware('web')
 
 
         Route::get('/account/login', \Manta\FluxCMS\Livewire\Auth\LoginForm::class)->name('account.login');
-        Route::get('/account/register', \Manta\FluxCMS\Livewire\Auth\Register::class)->name('account.register');
+        // Route::get('/account/register', \Manta\FluxCMS\Livewire\Auth\Register::class)->name('account.register');
         Route::get('/account/forgot-password', \Manta\FluxCMS\Livewire\Auth\ForgotPassword::class)->name('account.forgot-password');
         Route::get('/account/reset-password', \Manta\FluxCMS\Livewire\Auth\ResetPassword::class)->name('account.reset-password');
         Route::get('/account/verify-email', \Manta\FluxCMS\Livewire\Auth\VerifyEmail::class)->name('account.verify-email');

@@ -1,6 +1,6 @@
 <flux:main container>
     <x-manta.breadcrumb :$breadcrumb />
-    <div class="flex items-center justify-between mt-4">
+    <div class="mt-4 flex items-center justify-between">
         <div>
             <flux:button icon="plus" href="{{ route('manta-cms.company.create') }}">
                 Toevoegen
@@ -14,6 +14,9 @@
 
     <flux:table :paginate="$items">
         <flux:table.columns>
+            @if ($this->fields['uploads']['active'])
+                <flux:table.column></flux:table.column>
+            @endif
             <flux:table.column>#</flux:table.column>
             <flux:table.column sortable :sorted="$sortBy === 'company'" :direction="$sortDirection"
                 wire:click="dosort('company')">
@@ -34,7 +37,10 @@
 
         <flux:table.rows>
             @foreach ($items as $key => $item)
-                <flux:table.row data-id="{{ $item->id }}">
+                <flux:table.row data-id="{{ $item->id }}" wire:key="{{ $item->id }}">
+                    @if ($this->fields['uploads']['active'])
+                        <flux:table.cell><x-manta.tables.image :item="$item->image" /></flux:table.cell>
+                    @endif
                     <flux:table.cell>{{ $key + 1 }}</flux:table.cell>
                     <flux:table.cell>{{ $item->company }}</flux:table.cell>
                     <flux:table.cell>{{ $item->lastname }}</flux:table.cell>
@@ -47,7 +53,7 @@
                     </flux:table.cell>
                     <flux:table.cell>{{ $item->phone }}</flux:table.cell>
                     <flux:table.cell>
-                        <flux:button size="sm" href="{{ route($this->route_name . '.read', $item) }}"
+                        <flux:button size="sm" href="{{ route('manta-cms.company.read', $item) }}"
                             icon="eye" />
                         <x-manta.tables.delete-modal :item="$item" />
                     </flux:table.cell>

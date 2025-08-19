@@ -7,9 +7,8 @@ use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Locked;
 use Manta\FluxCMS\Traits\MantaTrait;
-use Livewire\Attributes\Layout;
 
-#[Layout('manta-cms::layouts.app')]
+
 class UploadOverview extends Component
 {
 

@@ -13,8 +13,9 @@ trait StaffTrait
 
     public function __construct()
     {
+        $this->route_prefix = 'manta-cms';
         $this->route_name = 'staff';
-        $this->route_list = route('manta-cms.' . $this->route_name . '.list');
+        $this->route_list = route($this->route_prefix . '.' . $this->route_name . '.list');
 
         $settings = MantaModule::where('name', 'staff')->first()->toArray();
 
@@ -88,7 +89,7 @@ trait StaffTrait
                 case 'comments':
                     $rules[$field] = 'nullable|string';
                     break;
-                    // Voeg hier eventueel nog andere velden toe als dat nodig is.
+                // Voeg hier eventueel nog andere velden toe als dat nodig is.
                 default:
                     $rules[$field] = 'nullable';
                     break;

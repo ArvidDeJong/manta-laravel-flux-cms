@@ -1,43 +1,44 @@
-<div>
-    <div class="flex justify-between items-center mb-6">
-        <x-flux::heading level="1">Dashboard</x-flux::heading>
+<flux:main container>
+    <div class="mb-8">
+        <flux:heading size="xl" level="1">Dashboard</flux:heading>
+        <flux:text class="mt-2 text-gray-600">Overzicht van je CMS statistieken en activiteiten</flux:text>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="p-6 bg-white shadow-sm rounded-lg">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <flux:card class="p-6">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-primary-50 text-primary-600">
-                    <x-flux::icon name="chart-bar" class="h-8 w-8" />
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-50">
+                    <flux:icon name="chart-bar" class="h-6 w-6 text-primary-600" />
                 </div>
                 <div class="ml-4">
-                    <h3 class="font-medium text-gray-700">Statistieken</h3>
-                    <p class="text-2xl font-semibold">1,234</p>
+                    <flux:heading size="sm" class="text-gray-700">Statistieken</flux:heading>
+                    <flux:text size="2xl" class="font-semibold">1,234</flux:text>
                 </div>
             </div>
-        </div>
+        </flux:card>
 
-        <div class="p-6 bg-white shadow-sm rounded-lg">
+        <flux:card class="p-6">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-green-50 text-green-600">
-                    <x-flux::icon name="users" class="h-8 w-8" />
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-50">
+                    <flux:icon name="users" class="h-6 w-6 text-green-600" />
                 </div>
                 <div class="ml-4">
-                    <h3 class="font-medium text-gray-700">Gebruikers</h3>
-                    <p class="text-2xl font-semibold">512</p>
+                    <flux:heading size="sm" class="text-gray-700">Gebruikers</flux:heading>
+                    <flux:text size="2xl" class="font-semibold">512</flux:text>
                 </div>
             </div>
-        </div>
+        </flux:card>
 
-        <div class="p-6 bg-white shadow-sm rounded-lg">
+        <flux:card class="p-6">
             <div class="flex items-center">
-                <div class="p-3 rounded-full bg-blue-50 text-blue-600">
-                    <x-flux::icon name="document-text" class="h-8 w-8" />
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+                    <flux:icon name="document-text" class="h-6 w-6 text-blue-600" />
                 </div>
                 <div class="ml-4">
-                    <h3 class="font-medium text-gray-700">Inhoud</h3>
-                    <p class="text-2xl font-semibold">89</p>
+                    <flux:heading size="sm" class="text-gray-700">Inhoud</flux:heading>
+                    <flux:text size="2xl" class="font-semibold">89</flux:text>
                 </div>
             </div>
-        </div>
+        </flux:card>
     </div>
-</div>
+</flux:main>

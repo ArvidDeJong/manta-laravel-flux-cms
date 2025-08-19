@@ -6,6 +6,7 @@
              <!-- Transparent overlay (optional) -->
          </a>
      </div>
+     <flux:avatar src="{{ $image }}" />
  @elseif ($item && $item->getImage()['src'])
      <div class="aspect-square w-32 rounded-lg bg-cover bg-center shadow-lg"
          style=" background-image: url('{{ $item->getImage()['src'] }}');">

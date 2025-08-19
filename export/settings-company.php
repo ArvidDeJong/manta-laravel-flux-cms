@@ -8,8 +8,8 @@ return [
         "single" => "Bedrijf",
         "multiple" => "Bedrijven"
     ],
-    "tabtitle" => "title",
-    "tab_title" => "title",
+    "tabtitle" => "company",
+    "tab_title" => "company",
     "type" => "tool",
     "active" => true,
     "locale" => "nl",
@@ -22,6 +22,14 @@ return [
     "ereg" => [],
     "settings" => [],
     "fields" => [
+        "uploads" => [
+            "active" => true,
+            "type" => "",
+            "title" => "Uploads",
+            "read" => false,
+            "required" => false,
+            "edit" => false,
+        ],
         "active" => [
             "active" => true,
             "type" => "checkbox",

@@ -62,6 +62,7 @@ class CompanyUpdate extends Component
         );
 
         $this->getLocaleInfo();
+        $this->getTablist();
         $this->getBreadcrumb('update');
     }
 

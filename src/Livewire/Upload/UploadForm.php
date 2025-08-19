@@ -5,9 +5,8 @@ namespace Manta\FluxCMS\Livewire\Upload;
 use Manta\FluxCMS\Models\Upload;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Layout;
 
-#[Layout('manta-cms::layouts.app')]
+
 class UploadForm extends Component
 {
     use WithFileUploads;

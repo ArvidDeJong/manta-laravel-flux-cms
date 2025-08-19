@@ -1,57 +1,33 @@
 <div>
-    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="flex min-h-screen items-center justify-center bg-gray-100">
         <div class="w-full max-w-md">
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <x-flux::heading level="1" class="text-center mb-6">
-                    {{ __('Staff Login') }}
-                </x-flux::heading>
+            <flux:card class="p-8">
+                <div class="mb-8 text-center">
+                    <flux:heading size="xl" level="1" class="mb-2">Staff Login</flux:heading>
+                    <flux:text class="text-gray-600">Log in om toegang te krijgen tot het CMS</flux:text>
+                </div>
 
                 <form wire:submit="login">
                     <div class="space-y-6">
-                        <div>
-                            <x-flux::input
-                                label="{{ __('E-mail') }}"
-                                name="email"
-                                type="email"
-                                wire:model="email"
-                                required
-                                autofocus
-                            />
-                            @error('email') <div class="mt-1 text-red-500 text-sm">{{ $message }}</div> @enderror
+                        <flux:input wire:model="email" label="E-mailadres" type="email" placeholder="je@email.nl"
+                            icon="at-symbol" />
+
+                        <flux:input wire:model="password" label="Wachtwoord" type="password" placeholder="Je wachtwoord"
+                            icon="key" viewable />
+
+                        <div class="flex items-center justify-between">
+                            <flux:checkbox wire:model="remember" label="Onthoud mij" />
+
+                            <flux:link href="{{ route('flux-cms.staff.forgot-password') }}" class="text-sm">
+                                Wachtwoord vergeten?
+                            </flux:link>
                         </div>
 
-                        <div>
-                            <x-flux::input
-                                label="{{ __('Wachtwoord') }}"
-                                name="password"
-                                type="password"
-                                wire:model="password"
-                                required
-                            />
-                        </div>
-
-                        <div class="flex items-center">
-                            <x-flux::checkbox
-                                label="{{ __('Onthoud mij') }}"
-                                wire:model="remember"
-                                name="remember"
-                            />
-                        </div>
-
-                        <div>
-                            <x-flux::button type="submit" class="w-full">
-                                {{ __('Inloggen') }}
-                            </x-flux::button>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <a href="{{ route('flux-cms.staff.forgot-password') }}" class="text-blue-600 hover:underline">
-                                {{ __('Wachtwoord vergeten?') }}
-                            </a>
-                        </div>
+                        <flux:button type="submit" variant="primary" class="w-full" icon="arrow-right">Inloggen
+                        </flux:button>
                     </div>
                 </form>
-            </div>
+            </flux:card>
         </div>
     </div>
 </div>

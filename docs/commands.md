@@ -281,22 +281,34 @@ php artisan manta:install --with-migrations --force
 
 ## manta:seed-company
 
-Creates a default company if no companies exist in the database. This is automatically called during `manta:install` but can also be run manually.
+Creates a default company and optionally generates additional sample companies. This is automatically called during `manta:install` but can also be run manually to generate test data.
 
 ### Usage
 
 ```bash
-# Seed default company
+# Seed default company (if none exist)
 php artisan manta:seed-company
+
+# Generate 5 companies
+php artisan manta:seed-company --count=5
+
+# Generate 10 companies
+php artisan manta:seed-company --count=10
 ```
+
+### Options
+
+- `--count=N` : Number of companies to generate (default: 1)
 
 ### Functionality
 
 The command:
 - Checks if any companies exist in the database
-- If companies exist: Shows count and skips creation
-- If no companies exist: Creates a default company with basic information
-- Returns detailed information about the action taken
+- Creates a default company if none exist
+- Generates additional companies with realistic sample data when `--count` > 1
+- Uses diverse company names, cities, and contact information
+- Ensures unique company names and numbers
+- Returns detailed information about created companies
 
 **Default company details:**
 - **Name**: "Default Company"
@@ -307,17 +319,32 @@ The command:
 - **Status**: Active
 - **Created by**: "System"
 
+**Sample company data includes:**
+- Realistic Dutch company names (Tech Solutions BV, Green Energy Corp, etc.)
+- Major Dutch cities with correct postal codes
+- Sequential company numbers (COMP-001, COMP-002, etc.)
+- Generated phone numbers and addresses
+
 ### Example Output
 
 ```bash
-# When no companies exist
-✓ Default company created successfully
-  Company: Default Company
-  Number: COMP-001
-  City: Amsterdam
+# When no companies exist (single company)
+Running Company Seeder (generating 1 companies)...
+✓ Created 1 companies. Total companies in database: 1
+  📢 Default Company (COMP-001) - Amsterdam
+
+# When generating multiple companies
+Running Company Seeder (generating 5 companies)...
+✓ Created 5 companies. Total companies in database: 6
+  📢 Food & Beverage Co (COMP-002) - Utrecht
+  📢 Construction Masters (COMP-004) - Almere
+  📢 Consulting Group (COMP-006) - Amsterdam
+  📢 Construction Masters 1 (COMP-008) - Groningen
+  📢 Software Development (COMP-010) - Almere
 
 # When companies already exist
 ✓ Found 3 existing companies in database
+💡 Use --count=5 to generate 5 additional companies anyway
 ```
 
 ## manta:refresh
@@ -336,3 +363,193 @@ php artisan manta:refresh --no-build
 ### Options
 
 - `--no-build` : Do not run npm run build
+
+## 🌱 Creating Module Seeders
+
+For Manta modules, you can create seeders that follow a standardized pattern. This ensures consistency across all modules and provides users with familiar command options.
+
+### Seeder Structure
+
+A proper Manta module seeder should:
+
+1. **Extend `Illuminate\Console\Command`**
+2. **Use standardized command signature with common options**
+3. **Include sample data seeding**
+4. **Support navigation item seeding**
+5. **Provide user-friendly output with emojis and progress indicators**
+
+### Example: Creating a Page Seeder
+
+Here's how to create a seeder for a module like `darvis/manta-page`:
+
+#### Step 1: Create the Command Class
+
+```php
+<?php
+
+namespace Darvis\MantaPage\Console\Commands;
+
+use Darvis\MantaPage\Models\Page;
+use Illuminate\Console\Command;
+
+class SeedPageCommand extends Command
+{
+    protected $signature = 'manta-page:seed 
+                            {--force : Force seeding even if pages already exist}
+                            {--fresh : Delete existing pages before seeding}
+                            {--with-navigation : Also seed navigation items for page management}';
+
+    protected $description = 'Seed the database with sample pages';
+
+    public function handle()
+    {
+        $this->info('🌱 Seeding Manta Pages...');
+        $this->newLine();
+
+        // Check existing items
+        $existingCount = Page::count();
+        
+        if ($existingCount > 0 && !$this->option('force') && !$this->option('fresh')) {
+            $this->warn("⚠️  Found {$existingCount} existing pages.");
+            
+            if (!$this->confirm('Do you want to continue seeding? This will add more items.', false)) {
+                $this->info('Seeding cancelled.');
+                return self::SUCCESS;
+            }
+        }
+
+        // Handle fresh option
+        if ($this->option('fresh')) {
+            if ($this->confirm('This will delete ALL existing pages. Are you sure?', false)) {
+                $this->info('🗑️  Deleting existing pages...');
+                Page::truncate();
+                $this->line('   ✅ Existing pages deleted');
+            } else {
+                $this->info('Fresh seeding cancelled.');
+                return self::SUCCESS;
+            }
+        }
+
+        // Run the seeder
+        try {
+            $this->seedPageItems();
+            
+            $totalCount = Page::count();
+            $this->newLine();
+            $this->info("🎉 Page seeding completed successfully!");
+            $this->line("   📊 Total pages in database: {$totalCount}");
+            
+        } catch (\Exception $e) {
+            $this->error('❌ Error during seeding: ' . $e->getMessage());
+            return self::FAILURE;
+        }
+
+        // Seed navigation if requested
+        if ($this->option('with-navigation')) {
+            $this->seedNavigation();
+        }
+
+        return self::SUCCESS;
+    }
+
+    private function seedPageItems(): void
+    {
+        // Your seeding logic here
+    }
+
+    private function seedNavigation(): void
+    {
+        // Navigation seeding logic here
+    }
+}
+```
+
+#### Step 2: Register the Command
+
+Add the command to your module's ServiceProvider:
+
+```php
+// In your ModuleServiceProvider.php
+if ($this->app->runningInConsole()) {
+    $this->commands([
+        \Darvis\MantaPage\Console\Commands\SeedPageCommand::class,
+    ]);
+}
+```
+
+### Standard Command Options
+
+All module seeders should support these options:
+
+- `--force` : Force seeding even if items already exist
+- `--fresh` : Delete existing items before seeding (with confirmation)
+- `--with-navigation` : Also seed navigation items for module management
+
+### Navigation Items Structure
+
+When seeding navigation items, use this structure:
+
+```php
+private function seedModuleNavigation(): void
+{
+    $navItems = [
+        [
+            'title' => 'Module Name',
+            'route' => 'module.list',
+            'sort' => 5, // Adjust as needed
+            'type' => 'module', // Important: use 'module', not 'content'
+            'description' => 'Manage module items'
+        ]
+    ];
+
+    $MantaNav = '\Manta\FluxCMS\Models\MantaNav';
+    
+    foreach ($navItems as $item) {
+        $existingNav = $MantaNav::where('route', $item['route'])
+            ->where('locale', 'nl')
+            ->first();
+
+        if (!$existingNav) {
+            $MantaNav::create([
+                'created_by' => 'Module Seeder',
+                'company_id' => 1,
+                'host' => request()->getHost() ?? 'localhost',
+                'locale' => 'nl',
+                'active' => true,
+                'sort' => $item['sort'],
+                'title' => $item['title'],
+                'route' => $item['route'],
+                'type' => $item['type'],
+                'data' => json_encode([
+                    'description' => $item['description'],
+                    'icon' => 'document-text', // Choose appropriate icon
+                    'module' => 'manta-module-name'
+                ]),
+            ]);
+        }
+    }
+}
+```
+
+### Best Practices
+
+1. **Consistent Naming**: Use `manta-{module}:seed` as command name
+2. **User-Friendly Output**: Use emojis and clear messages
+3. **Safety First**: Always confirm destructive actions
+4. **Error Handling**: Wrap seeding in try-catch blocks
+5. **Progress Indicators**: Show what's happening at each step
+6. **Flexible Options**: Support force, fresh, and navigation options
+7. **Navigation Type**: Always use `'type' => 'module'` for navigation items
+
+### Testing Your Seeder
+
+```bash
+# Test basic seeding
+php artisan manta-module:seed
+
+# Test with all options
+php artisan manta-module:seed --fresh --force --with-navigation
+
+# Check help
+php artisan manta-module:seed --help
+```

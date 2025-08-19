@@ -1,37 +1,48 @@
 <div>
-    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="flex min-h-screen items-center justify-center bg-gray-100">
         <div class="w-full max-w-md">
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <x-flux::heading level="1" class="text-center mb-6">
-                    {{ __('E-mail verifiëren') }}
-                </x-flux::heading>
+            <flux:card class="p-8">
+                <div class="mb-8 text-center">
+                    <flux:heading size="xl" level="1" class="mb-2">E-mail verifiëren</flux:heading>
+                    <flux:text class="text-gray-600">Controleer je inbox om je account te activeren</flux:text>
+                </div>
 
                 @if (session('status') === 'verification-link-sent')
-                    <x-flux::callout type="success" class="mb-6">
-                        {{ __('Een nieuwe verificatielink is verzonden naar je e-mailadres.') }}
-                    </x-flux::callout>
+                    <flux:callout variant="success" class="mb-6">
+                        <flux:icon name="check-circle" class="h-5 w-5" />
+                        Een nieuwe verificatielink is verzonden naar je e-mailadres.
+                    </flux:callout>
                 @endif
 
-                <div class="mb-6 text-gray-600">
-                    {{ __('Bedankt voor je registratie! Voordat je kunt beginnen, moet je je e-mailadres verifiëren door op de link te klikken die we zojuist naar je hebben gemaild. Als je geen e-mail hebt ontvangen, sturen we je graag een nieuwe.') }}
+                <div class="mb-8">
+                    <flux:text class="text-gray-600 leading-relaxed">
+                        Bedankt voor je registratie! Voordat je kunt beginnen, moet je je e-mailadres verifiëren door op de link te klikken die we zojuist naar je hebben gemaild.
+                    </flux:text>
+                    <flux:text class="mt-4 text-gray-600">
+                        Geen e-mail ontvangen? Controleer je spam-map of vraag een nieuwe link aan.
+                    </flux:text>
                 </div>
 
                 <div class="space-y-6">
                     <form wire:submit="resend">
-                        <div class="text-center">
-                            <x-flux::button type="submit" class="w-full">
-                                {{ __('Verstuur verificatie e-mail opnieuw') }}
-                            </x-flux::button>
-                        </div>
+                        <flux:button 
+                            type="submit" 
+                            variant="primary" 
+                            class="w-full"
+                            icon="paper-airplane"
+                        >
+                            Verstuur verificatie e-mail opnieuw
+                        </flux:button>
                     </form>
 
-                    <div class="text-center mt-4">
-                        <a href="{{ route('flux-cms.staff.logout') }}" class="text-blue-600 hover:underline">
-                            {{ __('Uitloggen') }}
-                        </a>
+                    <div class="text-center">
+                        <flux:link href="{{ route('flux-cms.staff.logout') }}" class="inline-flex items-center gap-2 text-sm">
+                            <flux:icon name="arrow-right-start-on-rectangle" class="h-4 w-4" />
+                            Uitloggen
+                        </flux:link>
                     </div>
                 </div>
-            </div>
+            </flux:card>
         </div>
     </div>
 </div>

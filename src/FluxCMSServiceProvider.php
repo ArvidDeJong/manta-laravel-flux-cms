@@ -14,6 +14,9 @@ use Manta\FluxCMS\Console\Commands\CreateStaffCommand;
 use Manta\FluxCMS\Console\Commands\ImportModuleSettingsCommand;
 use Manta\FluxCMS\Console\Commands\InstallCommand;
 use Manta\FluxCMS\Console\Commands\RefreshCommand;
+use Manta\FluxCMS\Console\Commands\SeedCompanyCommand;
+use Manta\FluxCMS\Console\Commands\SeedCompanyNavigationCommand;
+use Manta\FluxCMS\Console\Commands\SeedNavigationCommand;
 use Manta\FluxCMS\Console\Commands\SyncRoutesCommand;
 use Manta\FluxCMS\Livewire\Dashboard;
 use Manta\FluxCMS\View\Components\Manta\Cms\HeaderFlux;
@@ -104,6 +107,9 @@ class FluxCMSServiceProvider extends ServiceProvider
 
         // Registreer PHP Blade componenten (met unieke naam om conflict te voorkomen)
         Blade::component('manta.cms.header-flux-php', HeaderFlux::class);
+        
+        // Registreer Webflow componenten
+        Blade::component('manta.webflow-image', \Manta\FluxCMS\View\Components\WebflowImage::class);
 
         // Laad migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -119,6 +125,9 @@ class FluxCMSServiceProvider extends ServiceProvider
                 ImportModuleSettingsCommand::class,
                 InstallCommand::class,
                 RefreshCommand::class,
+                SeedCompanyCommand::class,
+                SeedCompanyNavigationCommand::class,
+                SeedNavigationCommand::class,
                 SyncRoutesCommand::class,
             ]);
         }
@@ -371,6 +380,8 @@ class FluxCMSServiceProvider extends ServiceProvider
         Livewire::component('manta-cms::upload.dropzone', \Manta\FluxCMS\Livewire\Upload\UploadDropzone::class);
         Livewire::component('manta-cms::upload.crop', \Manta\FluxCMS\Livewire\Upload\UploadCrop::class);
         Livewire::component('manta-cms::upload.form', \Manta\FluxCMS\Livewire\Upload\UploadForm::class);
+        Livewire::component('manta-cms::livewire.upload.upload-form', \Manta\FluxCMS\Livewire\Upload\UploadForm::class);
+        Livewire::component('manta-cms::livewire.upload.upload-overview', \Manta\FluxCMS\Livewire\Upload\UploadOverview::class);
 
         // Auth componenten voor reguliere gebruikers
         Livewire::component('manta-cms::auth.login-form', \Manta\FluxCMS\Livewire\Auth\LoginForm::class);

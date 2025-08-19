@@ -33,16 +33,16 @@
             <flux:heading class="text-center" size="xl">Registreren</flux:heading>
 
             <div class="flex flex-col gap-6">
-                <flux:input label="Naam" type="text" wire:model.blur="name" placeholder="Voer je naam in"
+                <flux:input label="Naam" type="text" wire:model="name" placeholder="Voer je naam in"
                     error="{{ $errors->first('name') }}" />
 
-                <flux:input label="E-mailadres" type="email" wire:model.blur="email" placeholder="email@voorbeeld.nl"
+                <flux:input label="E-mailadres" type="email" wire:model="email" placeholder="email@voorbeeld.nl"
                     error="{{ $errors->first('email') }}" />
 
-                <flux:input label="Wachtwoord" type="password" wire:model.blur="password"
-                    placeholder="Minimaal 8 tekens" error="{{ $errors->first('password') }}" viewable />
+                <flux:input label="Wachtwoord" type="password" wire:model="password" placeholder="Minimaal 8 tekens"
+                    error="{{ $errors->first('password') }}" viewable />
 
-                <flux:input label="Bevestig wachtwoord" type="password" wire:model.blur="password_confirmation"
+                <flux:input label="Bevestig wachtwoord" type="password" wire:model="password_confirmation"
                     placeholder="Herhaal wachtwoord" viewable />
 
                 <flux:button variant="primary" class="w-full" wire:click="register" wire:loading.attr="disabled">

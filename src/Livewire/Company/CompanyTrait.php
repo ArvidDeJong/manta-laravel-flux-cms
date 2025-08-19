@@ -13,15 +13,19 @@ trait CompanyTrait
 
     public function __construct()
     {
+
+        $this->route_prefix = 'manta-cms.';
         $this->route_name = 'company';
-        $this->route_list = route('manta-cms.' . $this->route_name . '.list');
+        $this->route_list = route($this->route_prefix  . $this->route_name . '.list');
 
         $settings = MantaModule::where('name', 'company')->first()->toArray();
 
         $this->config = $settings;
 
         $this->fields = $settings['fields'];
-        $this->tab_title = isset($settings['tab_title']) ? $settings['tab_title'] : null;
+
+
+        $this->tab_title = isset($settings['tabtitle']) ? $settings['tabtitle'] : 'company';
 
         $this->moduleClass = 'Manta\FluxCMS\Models\Company';
     }
@@ -79,7 +83,13 @@ trait CompanyTrait
             });
     }
 
-    public function rules()
+
+    /**
+     * Validatie regels voor het aanmaken van een bedrijf.
+     *
+     * @return array
+     */
+    public function rules(): array
     {
         $itemId = $this->item ? $this->item->id : null;
         $numberUniqueRule = $itemId ? 'unique:companies,number,' . $itemId : 'unique:companies,number';
@@ -88,7 +98,7 @@ trait CompanyTrait
 
         foreach ($this->fields as $field => $properties) {
             if (!$properties['required']) {
-                continue;
+                //  continue;
             }
 
             switch ($field) {
@@ -139,8 +149,11 @@ trait CompanyTrait
             }
         }
 
+        // dd($rules, $this->fields);//
+
         return $rules;
     }
+
 
     public function messages()
     {

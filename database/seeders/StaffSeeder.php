@@ -1,6 +1,6 @@
 <?php
 
-namespace Manta\FluxCMS\Database\seeders;
+namespace Manta\FluxCMS\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
