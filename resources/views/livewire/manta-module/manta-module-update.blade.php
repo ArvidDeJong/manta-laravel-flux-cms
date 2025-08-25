@@ -61,7 +61,31 @@
                                 <flux:table.cell>
                                     <input wire:model="fields.{{ $key }}.active" type="checkbox" />
                                 </flux:table.cell>
-                                <flux:table.cell>{{ $field['type'] }}</flux:table.cell>
+                                <flux:table.cell>
+                                    <flux:select wire:model="fields.{{ $key }}.type"
+                                        placeholder="Kies type...">
+                                        <flux:select.option value="text">Tekst</flux:select.option>
+                                        <flux:select.option value="email">E-mail</flux:select.option>
+                                        <flux:select.option value="password">Wachtwoord</flux:select.option>
+                                        <flux:select.option value="number">Nummer</flux:select.option>
+                                        <flux:select.option value="array">Array</flux:select.option>
+                                        <flux:select.option value="date">Datum</flux:select.option>
+                                        <flux:select.option value="datetime-local">Datum + Tijd</flux:select.option>
+                                        <flux:select.option value="checkbox">Checkbox</flux:select.option>
+                                        <flux:select.option value="checklist">Checklist</flux:select.option>
+                                        <flux:select.option value="locale">Taal (locale)</flux:select.option>
+                                        <flux:select.option value="routes">Routes</flux:select.option>
+                                        <flux:select.option value="select">Select</flux:select.option>
+                                        <flux:select.option value="textarea">Tekstvak</flux:select.option>
+                                        <flux:select.option value="editor">Editor</flux:select.option>
+                                        <flux:select.option value="tinymce">TinyMCE</flux:select.option>
+                                        <flux:select.option value="tinymce-email">TinyMCE (Email)</flux:select.option>
+                                        <flux:select.option value="divider">Scheiding (Divider)</flux:select.option>
+                                        <flux:select.option value="string">String</flux:select.option>
+                                        <flux:select.option value="route">Route</flux:select.option>
+                                    </flux:select>
+
+                                </flux:table.cell>
                                 <flux:table.cell>
                                     <input wire:model="fields.{{ $key }}.read" type="checkbox" />
                                 </flux:table.cell>

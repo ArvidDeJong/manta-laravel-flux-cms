@@ -57,6 +57,7 @@ class CompanyUpdate extends Component
                 'phone2',
                 'bsn',
                 'iban',
+                'google_maps_embed',
                 'latitude',
                 'longitude',
             )
@@ -110,6 +111,7 @@ class CompanyUpdate extends Component
             'phone2',
             'bsn',
             'iban',
+            'google_maps_embed',
             'latitude',
             'longitude',
             'data',

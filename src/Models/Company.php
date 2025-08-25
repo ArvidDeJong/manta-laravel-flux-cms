@@ -85,6 +85,7 @@ class Company extends Model
         'iban',
         'latitude',
         'longitude',
+        'google_maps_embed',
         'data',        // Nieuwe kolom
     ];
 

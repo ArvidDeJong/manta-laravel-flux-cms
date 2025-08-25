@@ -50,6 +50,7 @@ return new class extends Migration
             $table->string('phone2')->nullable();
             $table->string('bsn')->nullable();
             $table->string('iban')->nullable();
+            $table->string('google_maps_embed')->nullable();
             $table->decimal('latitude', 10, 8)->nullable()->comment('Latitude coordinate');
             $table->decimal('longitude', 11, 8)->nullable()->comment('Longitude coordinate');
             $table->longText('data')->nullable();

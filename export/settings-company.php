@@ -179,14 +179,14 @@ return [
         ],
         "phone" => [
             "active" => true,
-            "type" => "tel",
+            "type" => "text",
             "title" => "Telefoon",
             "read" => true,
             "required" => false
         ],
         "phone2" => [
             "active" => true,
-            "type" => "tel",
+            "type" => "text",
             "title" => "Telefoon 2",
             "read" => true,
             "required" => false
@@ -202,6 +202,13 @@ return [
             "active" => true,
             "type" => "text",
             "title" => "IBAN",
+            "read" => true,
+            "required" => false
+        ],
+        "google_maps_embed" => [
+            "active" => true,
+            "type" => "text",
+            "title" => "Google Maps Embed",
             "read" => true,
             "required" => false
         ],

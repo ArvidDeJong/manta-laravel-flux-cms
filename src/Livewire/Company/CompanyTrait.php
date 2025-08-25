@@ -69,6 +69,7 @@ trait CompanyTrait
     public ?string $phone2 = null;
     public ?string $bsn = null;
     public ?string $iban = null;
+    public ?string $google_maps_embed = null;
     public ?float $latitude = null;
     public ?float $longitude = null;
 
