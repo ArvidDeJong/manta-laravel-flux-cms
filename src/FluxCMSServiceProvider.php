@@ -404,6 +404,7 @@ class FluxCMSServiceProvider extends ServiceProvider
         Livewire::component('manta-cms::cms.module-translations', \Manta\FluxCMS\Livewire\Cms\CmsModuleTranslations::class);
         Livewire::component('manta-cms::cms.numbers', \Manta\FluxCMS\Livewire\Cms\CmsNumbers::class);
         Livewire::component('manta-cms::cms.sandbox', \Manta\FluxCMS\Livewire\Cms\CmsSandbox::class);
+        Livewire::component('manta-cms::cms.cms-translator', \Manta\FluxCMS\Livewire\Cms\CmsTranslator::class);
 
         // Web componenten
         Livewire::component('manta-cms::web.dashboard', \Manta\FluxCMS\Livewire\Web\WebDashboard::class);
@@ -417,5 +418,8 @@ class FluxCMSServiceProvider extends ServiceProvider
         Livewire::component('manta-cms::manta-module.create', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleCreate::class);
         Livewire::component('manta-cms::manta-module.update', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleUpdate::class);
         Livewire::component('manta-cms::manta-module.read', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleRead::class);
+
+        // Option componenten
+        Livewire::component('manta-cms::option.update', \Manta\FluxCMS\Livewire\Option\OptionUpdate::class);
     }
 }

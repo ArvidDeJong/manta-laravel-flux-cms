@@ -33,6 +33,8 @@ Route::middleware(['web', 'auth:staff'])->prefix(config('manta-cms.routes.prefix
         Route::get('/modules/{mantaModule}/aanpassen', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleUpdate::class)->name('manta-module.update');
         Route::get('/modules/{mantaModule}/bekijken', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleRead::class)->name('manta-module.read');
 
+        Route::get('/options', \Manta\FluxCMS\Livewire\Option\OptionUpdate::class)->name('option.update');
+
         Route::get("/upload", \Manta\FluxCMS\Livewire\Upload\UploadList::class)->name('upload.list');
         Route::get("/upload/toevoegen", \Manta\FluxCMS\Livewire\Upload\UploadCreate::class)->name('upload.create');
         Route::get("/upload/dropzone", \Manta\FluxCMS\Livewire\Upload\UploadDropzone::class)->name('upload.dropzone');
