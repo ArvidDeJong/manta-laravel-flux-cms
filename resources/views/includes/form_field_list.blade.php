@@ -203,7 +203,8 @@
      <div class="mt-4">
 
          <flux:button type="submit" variant="primary">Opslaan</flux:button>
-         <flux:button type="button" href="{{ $route_list }}">Terug naar lijst</flux:button>
+
+         <flux:button type="button" href="{{ route($module_routes['list']) }}">Terug naar lijst</flux:button>
      </div>
 
  </form>

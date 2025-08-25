@@ -7,26 +7,29 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Locked;
 use Manta\FluxCMS\Models\MantaModule;
+use Manta\FluxCMS\Services\ModuleSettingsService;
 
 trait CompanyTrait
 {
 
     public function __construct()
     {
+        $this->module_routes = [
+            'name' => 'company',
+            'list' => 'manta-cms.company.list',
+            'create' => 'manta-cms.company.create',
+            'update' => 'manta-cms.company.update',
+            'read' => 'manta-cms.company.read',
+            'upload' => 'manta-cms.company.upload',
+            'settings' => 'manta-cms.company.settings',
+            'maps' => null,
+        ];
 
-        $this->route_prefix = 'manta-cms.';
-        $this->route_name = 'company';
-        $this->route_list = route($this->route_prefix  . $this->route_name . '.list');
-
-        $settings = MantaModule::where('name', 'company')->first()->toArray();
-
+        $settings = ModuleSettingsService::ensureModuleSettings('company', 'darvis/manta-laravel-flux-cms');
         $this->config = $settings;
 
-        $this->fields = $settings['fields'];
-
-
-        $this->tab_title = isset($settings['tabtitle']) ? $settings['tabtitle'] : 'company';
-
+        $this->fields = $settings['fields'] ?? [];
+        $this->tab_title = $settings['tab_title'] ?? null;
         $this->moduleClass = 'Manta\FluxCMS\Models\Company';
     }
 
@@ -91,67 +94,15 @@ trait CompanyTrait
      */
     public function rules(): array
     {
-        $itemId = $this->item ? $this->item->id : null;
-        $numberUniqueRule = $itemId ? 'unique:companies,number,' . $itemId : 'unique:companies,number';
+        $return['company'] =  'required|string|max:255';
 
-        $rules = [];
-
-        foreach ($this->fields as $field => $properties) {
-            if (!$properties['required']) {
-                //  continue;
-            }
-
-            switch ($field) {
-                case 'company':
-                case 'lastname':
-                case 'firstnames':
-                    $rules[$field] = 'required|string|max:255';
-                    break;
-                case 'number':
-                    $rules[$field] = 'nullable|string|max:255|' . $numberUniqueRule;
-                    break;
-                case 'phone':
-                case 'phone2':
-                    $rules[$field] = 'nullable|string|max:20';
-                    break;
-                case 'zipcode':
-                    $rules[$field] = 'nullable|string|max:10';
-                    break;
-                case 'city':
-                case 'country':
-                case 'state':
-                    $rules[$field] = 'nullable|string|max:100';
-                    break;
-                case 'address':
-                    $rules[$field] = 'nullable|string|max:500';
-                    break;
-                case 'latitude':
-                    $rules[$field] = 'nullable|numeric|between:-90,90';
-                    break;
-                case 'longitude':
-                    $rules[$field] = 'nullable|numeric|between:-180,180';
-                    break;
-                case 'birthdate':
-                    $rules[$field] = 'nullable|date';
-                    break;
-                case 'active':
-                    $rules[$field] = 'boolean';
-                    break;
-                case 'bsn':
-                    $rules[$field] = 'nullable|string|max:20';
-                    break;
-                case 'iban':
-                    $rules[$field] = 'nullable|string|max:34';
-                    break;
-                default:
-                    $rules[$field] = 'nullable';
-                    break;
-            }
+        // Validatie voor 'title'
+        if (isset($this->fields['firstnames']) && $this->fields['firstnames']['active'] == true && $this->fields['firstnames']['required'] == true) {
+            $return['firstnames'] =  'required|string|max:255';
         }
 
-        // dd($rules, $this->fields);//
 
-        return $rules;
+        return $return;
     }
 
 

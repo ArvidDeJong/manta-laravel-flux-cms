@@ -19,7 +19,7 @@ class CompanyRead extends Component
         $this->item = $company;
         $this->id = $company->id;
         $this->data = is_array($company->data) ? $company->data : [];
-        
+
         // Vul de properties voor readonly weergave
         $this->fill(
             $company->only(
@@ -60,7 +60,7 @@ class CompanyRead extends Component
                 'longitude',
             )
         );
-        
+
         // Meertaligheidsondersteuning
         if ($request->input('locale') && $request->input('locale') != getLocaleManta()) {
             $this->pid = $company->id;

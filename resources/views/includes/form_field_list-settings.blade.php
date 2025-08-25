@@ -154,7 +154,7 @@
                     <flux:error name="settingsArr.{{ $key }}" />
                     <flux:description>Ook versturen naar de zender? Gebruik: ##ZENDER##</flux:description>
                 </flux:field>
-                <ul class="pl-5 mt-8 list-disc">
+                <ul class="mt-8 list-disc pl-5">
                     @foreach (explode(PHP_EOL, $settingsArr[$key]) as $key => $value)
                         @if (!empty($value))
                             <li class="flex items-center">
@@ -173,5 +173,5 @@
     @include('manta-cms::includes.form_error')
 
     <flux:button type="submit" variant="primary">Opslaan</flux:button>
-    <flux:button type="button" href="{{ $route_list }}">Terug naar lijst</flux:button>
+    <flux:button type="button" href="{{ route($module_routes['list']) }}">Terug naar lijst</flux:button>
 </form>

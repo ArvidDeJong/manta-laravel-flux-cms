@@ -55,20 +55,21 @@
                     </flux:table.columns>
 
                     <flux:table.rows>
-                        @foreach ($fields as $field)
+                        @foreach ($fields as $key => $field)
                             <flux:table.row>
                                 <flux:table.cell>{{ $field['title'] }}</flux:table.cell>
                                 <flux:table.cell>
-                                    {{ isset($field['active']) && $field['active'] == true ? 'Ja' : 'Nee' }}
+                                    <input wire:model="fields.{{ $key }}.active" type="checkbox" />
                                 </flux:table.cell>
                                 <flux:table.cell>{{ $field['type'] }}</flux:table.cell>
-                                <flux:table.cell>{{ isset($field['read']) && $field['read'] == true ? 'Ja' : 'Nee' }}
+                                <flux:table.cell>
+                                    <input wire:model="fields.{{ $key }}.read" type="checkbox" />
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ isset($field['required']) && $field['required'] == true ? 'Ja' : 'Nee' }}
+                                    <input wire:model="fields.{{ $key }}.required" type="checkbox" />
                                 </flux:table.cell>
                                 <flux:table.cell>
-                                    {{ isset($field['edit']) && $field['edit'] == true ? 'Ja' : 'Nee' }}
+                                    <input wire:model="fields.{{ $key }}.edit" type="checkbox" />
                                 </flux:table.cell>
                             </flux:table.row>
                         @endforeach

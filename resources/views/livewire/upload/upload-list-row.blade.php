@@ -21,5 +21,5 @@ new class extends \Livewire\Volt\Component {
         {{ $item->identifier }}
     </flux:table.cell>
 
-    <x-manta.flux.manta-flux-delete :$item :$route_name :$moduleClass :$fields :translatable="false" />
+    {{-- <x-manta.flux.manta-flux-delete :$item :$route_name :$moduleClass :$fields :translatable="false" /> --}}
 </flux:table.row>
