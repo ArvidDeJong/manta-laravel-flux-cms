@@ -32,8 +32,12 @@
     if (empty($src) && !empty($basePath)) {
         $src = $basePath;
     }
+    
+    // Don't render img tag if no src is available
+    $shouldRender = !empty($src);
 @endphp
 
+@if($shouldRender)
 <img 
     sizes="{{ $sizes }}"
     @if($srcset)
@@ -46,3 +50,4 @@
     @endif
     {{ $attributes }}
 >
+@endif

@@ -3,6 +3,7 @@
 namespace Manta\FluxCMS\View\Components;
 
 use Illuminate\View\Component;
+use Manta\FluxCMS\Models\Upload;
 
 class WebflowImage extends Component
 {
@@ -14,6 +15,8 @@ class WebflowImage extends Component
     public array $breakpoints;
     public string $basePath;
     public string $extension;
+    public ?Upload $upload;
+    public ?string $fallbackSrc;
 
     /**
      * Create a new component instance.
@@ -26,16 +29,49 @@ class WebflowImage extends Component
         string $srcset = '',
         array $breakpoints = [500, 800, 1080, 1600, 2000],
         string $basePath = '',
-        string $extension = 'jpg'
+        string $extension = 'jpg',
+        ?Upload $upload = null,
+        ?string $fallbackSrc = null
     ) {
-        $this->src = $src;
+        // Initialiseer eerst alle properties
         $this->alt = $alt;
         $this->class = $class;
         $this->sizes = $sizes;
-        $this->srcset = $srcset;
         $this->breakpoints = $breakpoints;
         $this->basePath = $basePath;
         $this->extension = $extension;
+        $this->upload = $upload;
+        $this->fallbackSrc = $fallbackSrc;
+
+        // Als we een Upload object hebben, genereer dan automatisch src en srcset
+        if ($this->upload) {
+            $this->src = $this->upload->getImage()['src'] ?? $this->fallbackSrc ?? '';
+            $this->srcset = $this->generateSrcset();
+        } else {
+            $this->src = $src ?: $this->fallbackSrc ?? '';
+            $this->srcset = $srcset;
+        }
+    }
+
+    /**
+     * Genereer automatisch srcset op basis van breakpoints
+     */
+    private function generateSrcset(): string
+    {
+        if (!$this->upload) {
+            return '';
+        }
+
+        $srcsetParts = [];
+
+        foreach ($this->breakpoints as $width) {
+            $imageData = $this->upload->getImage($width);
+            if (isset($imageData['src'])) {
+                $srcsetParts[] = $imageData['src'] . ' ' . $width . 'w';
+            }
+        }
+
+        return implode(', ', $srcsetParts);
     }
 
     /**
