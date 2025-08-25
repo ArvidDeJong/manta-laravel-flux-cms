@@ -2,7 +2,7 @@
     <x-manta.breadcrumb :$breadcrumb />
     <div class="mt-4 flex items-center justify-between">
         <div>
-            <flux:button icon="plus" href="{{ route('manta-cms.company.create') }}">
+            <flux:button icon="plus" href="{{ route($this->module_routes['create']) }}">
                 Toevoegen
             </flux:button>
         </div>

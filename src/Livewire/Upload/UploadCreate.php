@@ -63,7 +63,7 @@ class UploadCreate extends Component
 
         $this->documents = [];
 
-        $this->redirect(route('upload.list'));
+        $this->redirect(UploadList::class);
         // $this->dispatch('upload-created', model_class: get_class($this->model_class), id: $this->model_class->id);
     }
 

@@ -10,7 +10,9 @@ use Livewire\Component;
 use Manta\FluxCMS\Traits\MantaTrait;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 
+#[Title('Upload update')]
 #[Layout('manta-cms::layouts.app')]
 class UploadUpdate extends Component
 {
@@ -33,11 +35,10 @@ class UploadUpdate extends Component
                 'title',
                 'identifier',
                 'seo_title',
-                'content',
-                'data',
+                'content'
             ),
         );
-
+        $this->data = (array)$upload->data;
 
         $this->data_content = $upload->data[$this->data_locale] ?? [];
 
@@ -58,8 +59,8 @@ class UploadUpdate extends Component
             'image' => $upload->image,
             'icon' => $upload->getIcon(),
             'url' => $upload->getImage()['src'],
-            'url_update' => route('upload.update', ['upload' => $upload, 'redirect_url' => url()->full(), 'redirect_title' => $upload->title]),
-            'url_crop' => route('upload.crop', ['upload' => $upload, 'redirect_url' => url()->full(), 'redirect_title' => $upload->title]),
+            'url_update' => route($this->module_routes['update'], ['upload' => $upload, 'redirect_url' => url()->full(), 'redirect_title' => $upload->title]),
+            'url_crop' => route($this->module_routes['crop'], ['upload' => $upload, 'redirect_url' => url()->full(), 'redirect_title' => $upload->title]),
         ];
         $this->thumbnails = $thumbnails;
 
@@ -74,8 +75,8 @@ class UploadUpdate extends Component
 
     public function render()
     {
-        // dd($this->data, $this->data_content);
-        return view('manta-cms::livewire.upload.upload-update')->layoutData(['title' => 'Upload']);
+
+        return view('manta-cms::livewire.upload.upload-update');
     }
 
     public function save()
@@ -84,7 +85,7 @@ class UploadUpdate extends Component
 
         if (!isset($this->data[$this->data_locale]))  $this->data = [$this->data_locale => []];
         $this->data[$this->data_locale] = $this->data_content;
-        // dd($this->data, $this->data_content);
+
 
         $row = $this->only(
             'title',
@@ -96,7 +97,6 @@ class UploadUpdate extends Component
         $row['updated_by'] = auth('staff')->user()->name;
         Upload::where('id', $this->id)->update($row);
 
-        // return redirect()->to(url($this->redirect_url));
         Flux::toast('Opgeslagen', duration: 1000, variant: 'success');
     }
 

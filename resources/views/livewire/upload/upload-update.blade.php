@@ -83,7 +83,49 @@
                 <flux:subheading>{{ $item->size / 1024 }} KB</flux:subheading>
             </div>
         </div>
+        <div class="mt-6">
+            <flux:heading>WebflowImage Component Code</flux:heading>
+            <div class="mt-2 rounded-lg bg-gray-100 p-4">
+                <pre class="whitespace-pre-wrap text-sm text-gray-800" id="component-code">&lt;x-manta.webflow-image 
+    id="{{ $item->id }}"
+    sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 800px"
+    class="img-large"
+    alt="{{ $item->title ?? '' }}" /&gt;</pre>
+                <flux:button size="sm" class="mt-2" onclick="copyToClipboard()">
+                    Kopieer HTML
+                </flux:button>
+            </div>
+        </div>
+
+        <script>
+            function copyToClipboard() {
+                // Test alert direct
+                alert('Test - functie aangeroepen');
+
+                const code = document.getElementById('component-code').textContent;
+                navigator.clipboard.writeText(code).then(function() {
+                    // Toon success feedback
+                    const button = event.target;
+                    const originalText = button.textContent;
+                    button.textContent = 'Gekopieerd!';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+
+                    // Alert binnen Promise - mogelijk geblokkeerd
+                    alert('Code gekopieerd naar klembord!');
+
+                    // Toon Flux toast
+                    Flux.toast('Code gekopieerd naar klembord!', {
+                        duration: 2000,
+                        variant: 'success'
+                    });
+                }).catch(function(err) {
+                    //alert('Fout bij kopiëren: ' + err);
+                });
+            }
+        </script>
     @endif
-    @include('manta.includes.form_field_list')
+    @include('manta-cms::includes.form_field_list')
 
 </flux:main>

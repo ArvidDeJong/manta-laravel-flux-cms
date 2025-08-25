@@ -31,20 +31,12 @@ class UploadRead extends Component
         }
         $this->getLocaleInfo();
         $this->getBreadcrumb();
+
         // $this->getTablist();
     }
 
     public function render()
     {
         return view('manta-cms::livewire.upload.upload-read')->title('Upload bekijken');
-    }
-
-    public function getBreadcrumb()
-    {
-        $this->breadcrumb = [
-            ["title" => $this->breadcumbHomeName, "url" => route('cms.dashboard')],
-            ["title" => "Uploads", "url" => route('upload.list')],
-            ["title" => "Bekijken", "flag" => count(getLocalesManta()) > 1 ? $this->locale_info['class'] : null],
-        ];
     }
 }

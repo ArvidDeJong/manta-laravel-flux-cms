@@ -17,6 +17,7 @@ class WebflowImage extends Component
     public string $extension;
     public ?Upload $upload;
     public ?string $fallbackSrc;
+    public ?int $id;
 
     /**
      * Create a new component instance.
@@ -31,7 +32,8 @@ class WebflowImage extends Component
         string $basePath = '',
         string $extension = 'jpg',
         ?Upload $upload = null,
-        ?string $fallbackSrc = null
+        ?string $fallbackSrc = null,
+        ?int $id = null
     ) {
         // Initialiseer eerst alle properties
         $this->alt = $alt;
@@ -42,7 +44,11 @@ class WebflowImage extends Component
         $this->extension = $extension;
         $this->upload = $upload;
         $this->fallbackSrc = $fallbackSrc;
+        $this->id = $id;
 
+        if ($this->id) {
+            $this->upload = Upload::find($this->id);
+        }
         // Als we een Upload object hebben, genereer dan automatisch src en srcset
         if ($this->upload) {
             $this->src = $this->upload->getImage()['src'] ?? $this->fallbackSrc ?? '';

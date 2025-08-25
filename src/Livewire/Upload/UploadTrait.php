@@ -8,21 +8,31 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Layout;
 use Manta\FluxCMS\Models\MantaModule;
+use Manta\FluxCMS\Services\ModuleSettingsService;
 
 #[Layout('manta-cms::layouts.app')]
 trait UploadTrait
 {
     public function __construct()
     {
-        $this->route_name = 'upload';
-        $this->route_list = Route::has('upload.list') ? route('upload.list') : null;
-        $settings = MantaModule::where('name', 'upload')->first()->toArray();
+        $this->module_routes = [
+            'name' => 'upload',
+            'list' => 'manta-cms.upload.list',
+            'create' => 'manta-cms.upload.create',
+            'update' => 'manta-cms.upload.update',
+            'read' => 'manta-cms.upload.read',
+            'upload' => 'manta-cms.upload.upload',
+            'settings' => 'manta-cms.upload.settings',
+            'crop' => 'manta-cms.upload.crop',
+            'maps' => null,
+        ];
 
+        $settings = ModuleSettingsService::ensureModuleSettings('upload', 'darvis/manta-laravel-flux-cms');
         $this->config = $settings;
 
-        $this->fields = $settings['fields'];
-        $this->tab_title = isset($settings['tab_title']) ? $settings['tab_title'] : null;
-        $this->moduleClass = 'Manta\Models\Upload';
+        $this->fields = $settings['fields'] ?? [];
+        $this->tab_title = $settings['tab_title'] ?? null;
+        $this->moduleClass = 'Manta\FluxCMS\Models\Upload';
     }
 
     public ?Upload $item = null;

@@ -3,7 +3,7 @@
     <div class="mt-4 flex">
         <div class="flex-grow">
             @if (auth('staff')->user()->developer)
-                <x-manta.buttons.large type="add" :href="route($this->route_name . '.create')" />
+                <x-manta.buttons.large type="add" :href="route($this->module_routes['create'])" />
             @endif
         </div>
         <div class="w-1/5">
@@ -25,8 +25,20 @@
         </flux:table.columns>
         <flux:table.rows>
             @foreach ($items as $item)
-                <livewire:manta.upload.upload-list-row :$fields :$item :route_name="$this->route_name" :$moduleClass
-                    :key="$item->id">
+                <flux:table.row data-id="{{ $item->id }}">
+
+                    <flux:table.cell><x-manta.tables.image :item="$item" /></flux:table.cell>
+                    <flux:table.cell>
+                        {{ $item->title }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        {{ $item->identifier }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        <flux:button size="sm" icon="eye" href="{{ route('manta-cms.upload.read', $item) }}" />
+
+                    </flux:table.cell>
+                </flux:table.row>
             @endforeach
         </flux:table.rows>
     </flux:table>
