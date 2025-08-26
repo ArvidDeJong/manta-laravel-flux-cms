@@ -67,7 +67,7 @@
             <flux:menu.item icon="computer-desktop" href="https://get.teamviewer.com/arvid" target="_blank">
                 Teamviewer
             </flux:menu.item>
-            <flux:navmenu.item href="{{ route('manta-cms.logout') }}" icon="arrow-right-start-on-rectangle">
+            <flux:navmenu.item href="{{ route('flux-cms.staff.logout') }}" icon="arrow-right-start-on-rectangle">
                 Uitloggen
             </flux:navmenu.item>
         </flux:navmenu>
