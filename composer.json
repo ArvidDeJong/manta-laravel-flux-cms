@@ -43,5 +43,10 @@
                 "Manta\\FluxCMS\\FluxCMSServiceProvider"
             ]
         }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
     }
 }
