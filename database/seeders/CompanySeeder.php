@@ -16,7 +16,7 @@ class CompanySeeder extends Seeder
     {
         // Check if there are already companies in the database
         $existingCompanies = Company::count();
-        
+
         if ($existingCompanies > 0) {
             $firstCompany = Company::first();
             return [
@@ -25,7 +25,7 @@ class CompanySeeder extends Seeder
                 'company' => $firstCompany,
             ];
         }
-        
+
         // Create default company
         $defaultCompany = Company::create([
             'active' => true,
@@ -36,11 +36,12 @@ class CompanySeeder extends Seeder
             'zipcode' => '1000 AA',
             'city' => 'Amsterdam',
             'country' => 'nl',
+            'email' => 'info@arvid.nl',
             'phone' => '+31 20 123 4567',
             'locale' => 'nl',
             'created_by' => 'System',
         ]);
-        
+
         return [
             'action' => 'created',
             'message' => 'Default company created successfully',

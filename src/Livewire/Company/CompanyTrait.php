@@ -63,12 +63,16 @@ trait CompanyTrait
     public ?string $city = null;
     public ?string $country = 'nl';
     public ?string $state = null;
+    public ?string $email = null;
     public ?string $birthdate = null;
     public ?string $birthcity = null;
     public ?string $phone = null;
     public ?string $phone2 = null;
     public ?string $bsn = null;
     public ?string $iban = null;
+    public ?string $title = null;
+    public ?string $excerpt = null;
+    public ?string $description = null;
     public ?string $google_maps_embed = null;
     public ?float $latitude = null;
     public ?float $longitude = null;

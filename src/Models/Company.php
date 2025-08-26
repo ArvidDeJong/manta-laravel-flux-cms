@@ -77,12 +77,16 @@ class Company extends Model
         'city',
         'country',
         'state',
-        'birthdate',
-        'birthcity',
+        'email',
         'phone',
         'phone2',
         'bsn',
         'iban',
+        'birthdate',
+        'birthcity',
+        'title',
+        'excerpt',
+        'description',
         'latitude',
         'longitude',
         'google_maps_embed',
@@ -161,6 +165,6 @@ class Company extends Model
      */
     public function getFullNameAttribute(): string
     {
-        return trim("{$this->initials} {$this->nameInsertion} {$this->lastname}");
+        return trim("{$this->firstnames} {$this->nameInsertion} {$this->lastname}");
     }
 }

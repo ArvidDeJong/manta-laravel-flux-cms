@@ -44,12 +44,16 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('country')->default('nl');
             $table->string('state')->nullable();
-            $table->date('birthdate')->nullable();
-            $table->string('birthcity')->nullable();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone2')->nullable();
             $table->string('bsn')->nullable();
             $table->string('iban')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('birthcity')->nullable();
+            $table->string('title')->nullable();
+            $table->text('excerpt')->nullable();
+            $table->text('description')->nullable();
             $table->string('google_maps_embed')->nullable();
             $table->decimal('latitude', 10, 8)->nullable()->comment('Latitude coordinate');
             $table->decimal('longitude', 11, 8)->nullable()->comment('Longitude coordinate');

@@ -1,4 +1,4 @@
-<flux:main container>
+<flux:main>
     <x-manta.breadcrumb :$breadcrumb />
     <div class="mt-4 flex items-center justify-between">
         <div>
@@ -23,14 +23,13 @@
                 Bedrijfsnaam</flux:table.column>
             <flux:table.column sortable :sorted="$sortBy === 'lastname'" :direction="$sortDirection"
                 wire:click="dosort('lastname')">
-                Achternaam</flux:table.column>
-            <flux:table.column sortable :sorted="$sortBy === 'firstnames'" :direction="$sortDirection"
-                wire:click="dosort('firstnames')">
-                Voornamen</flux:table.column>
+                Contactpersoon</flux:table.column>
+
             <flux:table.column sortable :sorted="$sortBy === 'city'" :direction="$sortDirection"
                 wire:click="dosort('city')">
                 Plaats</flux:table.column>
             <flux:table.column>Actief</flux:table.column>
+            <flux:table.column>E-mail</flux:table.column>
             <flux:table.column>Telefoon</flux:table.column>
             <flux:table.column>Acties</flux:table.column>
         </flux:table.columns>
@@ -43,14 +42,14 @@
                     @endif
                     <flux:table.cell>{{ $key + 1 }}</flux:table.cell>
                     <flux:table.cell>{{ $item->company }}</flux:table.cell>
-                    <flux:table.cell>{{ $item->lastname }}</flux:table.cell>
-                    <flux:table.cell>{{ $item->firstnames }}</flux:table.cell>
+                    <flux:table.cell>{{ $item->full_name }}</flux:table.cell>
                     <flux:table.cell>{{ $item->city }}</flux:table.cell>
                     <flux:table.cell>
                         {!! $item->active
                             ? '<i class="text-green-600 fa-solid fa-check"></i>'
                             : '<i class="text-red-600 fa-solid fa-xmark"></i>' !!}
                     </flux:table.cell>
+                    <flux:table.cell>{{ $item->email }}</flux:table.cell>
                     <flux:table.cell>{{ $item->phone }}</flux:table.cell>
                     <flux:table.cell>
                         <flux:button size="sm" href="{{ route('manta-cms.company.read', $item) }}"

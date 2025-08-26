@@ -163,6 +163,13 @@ return [
             "read" => true,
             "required" => false
         ],
+        "email" => [
+            "active" => true,
+            "type" => "text",
+            "title" => "E-mail",
+            "read" => true,
+            "required" => false
+        ],
         "birthdate" => [
             "active" => true,
             "type" => "date",
@@ -202,6 +209,27 @@ return [
             "active" => true,
             "type" => "text",
             "title" => "IBAN",
+            "read" => true,
+            "required" => false
+        ],
+        "title" => [
+            "active" => true,
+            "type" => "text",
+            "title" => "Titel",
+            "read" => true,
+            "required" => false
+        ],
+        "excerpt" => [
+            "active" => true,
+            "type" => "textarea",
+            "title" => "Inleiding",
+            "read" => true,
+            "required" => false
+        ],
+        "description" => [
+            "active" => true,
+            "type" => "textarea",
+            "title" => "Omschrijving",
             "read" => true,
             "required" => false
         ],
