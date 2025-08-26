@@ -18,6 +18,7 @@ class WebflowImage extends Component
     public ?Upload $upload;
     public ?string $fallbackSrc;
     public ?int $id;
+    public bool $showedit;
 
     /**
      * Create a new component instance.
@@ -33,7 +34,8 @@ class WebflowImage extends Component
         string $extension = 'jpg',
         ?Upload $upload = null,
         ?string $fallbackSrc = null,
-        ?int $id = null
+        ?int $id = null,
+        bool $showedit = true
     ) {
         // Initialiseer eerst alle properties
         $this->alt = $alt;
@@ -45,6 +47,7 @@ class WebflowImage extends Component
         $this->upload = $upload;
         $this->fallbackSrc = $fallbackSrc;
         $this->id = $id;
+        $this->showedit = $showedit;
 
         if ($this->id) {
             $this->upload = Upload::find($this->id);
