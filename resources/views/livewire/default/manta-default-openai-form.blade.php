@@ -9,15 +9,30 @@
                <flux:subheading>Genereer bericht</flux:subheading>
            </div>
 
-           <flux:input wire:model="openaiSubject" label="Onderwerp"
-               description="Schrijf het onderwerp van je nieuwsbericht" />
+           <flux:textarea wire:model="openaiSubject" label="Onderwerp" rows="auto"
+               description="Schrijf het onderwerp van je bericht" />
            <flux:textarea rows="auto" wire:model="openaiDescription" label="Bericht"
-               description="Omschrijf het bedrijf en zijn doelgroep" />
+               description="Omschrijf de details van je bericht" />
 
            <div class="flex">
                <flux:spacer />
 
-               <flux:button icon="arrow-path" wire:click="getOpenai" class="mb-4 mt-4">Genereer bericht</flux:button>
+               <flux:button icon="arrow-path" wire:click="getOpenaiResult" class="mb-4 mt-4">Genereer bericht
+               </flux:button>
            </div>
        </flux:modal>
+
+       @if ($openaiResult)
+           <flux:callout icon="check-circle" variant="success">
+               <flux:callout.heading>SEO Content Gegenereerd</flux:callout.heading>
+
+               <flux:callout.text>
+                   {!! $openaiResult !!}
+
+                   @if ($openaiImageBase64)
+                       <img src="data:image/png;base64,{{ $openaiImageBase64 }}" alt="Generated Image">
+                   @endif
+               </flux:callout.text>
+           </flux:callout>
+       @endif
    @endif

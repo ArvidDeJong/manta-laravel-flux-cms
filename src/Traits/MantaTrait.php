@@ -50,8 +50,11 @@ trait MantaTrait
     public ?int $trashed = null;
     public ?string $deleteId = null;
 
-    public ?string $openaiSubject = null;
+    public ?string $openaiSubject = 'Optimaliseer';
     public ?string $openaiDescription = null;
+    public ?string $openaiImage = null;
+    public ?string $openaiResult = null;
+
     public function updatedTablistShow($value)
     {
         cookie()->queue('manta_tablist_show', $value, 60 * 24 * 30);

@@ -5,6 +5,7 @@ namespace Manta\FluxCMS\Livewire\Auth;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Manta\FluxCMS\Models\UserLog;
 
 #[Layout('manta-cms::layouts.guest')]
 class LoginForm extends Component
@@ -25,8 +26,38 @@ class LoginForm extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             session()->regenerate();
 
+            // Update lastLogin veld en log de login
+            $user = Auth::user();
+            $user->update(['lastLogin' => now()]);
+
+            // Maak een UserLog record aan
+            UserLog::create([
+                'user_id' => $user->id,
+                'email' => $this->email,
+                'ip' => request()->ip(),
+                'data' => [
+                    'action' => 'login',
+                    'success' => true,
+                    'user_agent' => request()->userAgent(),
+                    'timestamp' => now()->toISOString(),
+                ]
+            ]);
+
             return redirect()->intended(route(config('manta.user_home', 'website.homepage')));
         }
+
+        // Log mislukte login poging
+        UserLog::create([
+            'user_id' => null,
+            'email' => $this->email,
+            'ip' => request()->ip(),
+            'data' => [
+                'action' => 'login_failed',
+                'success' => false,
+                'user_agent' => request()->userAgent(),
+                'timestamp' => now()->toISOString(),
+            ]
+        ]);
 
         $this->addError('email', __('De opgegeven inloggegevens zijn onjuist.'));
     }

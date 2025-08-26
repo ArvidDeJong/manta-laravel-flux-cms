@@ -115,6 +115,7 @@ trait MantaModuleTrait
         // Zorg ervoor dat uploads en maps keys aanwezig zijn
         if (!isset($normalizedFields['uploads'])) {
             $normalizedFields['uploads'] = array_merge($defaultFieldStructure, [
+                'active' => false,
                 'title' => 'Uploads',
                 'type' => '',
                 'read' => false,
@@ -124,7 +125,19 @@ trait MantaModuleTrait
 
         if (!isset($normalizedFields['maps'])) {
             $normalizedFields['maps'] = array_merge($defaultFieldStructure, [
+                'active' => false,
                 'title' => 'Google Maps',
+                'type' => '',
+                'read' => false,
+                'edit' => false,
+            ]);
+        }
+
+        // Zorg ervoor dat uploads en maps keys aanwezig zijn
+        if (!isset($normalizedFields['chatgpt'])) {
+            $normalizedFields['chatgpt'] = array_merge($defaultFieldStructure, [
+                'active' => false,
+                'title' => 'ChatGPT',
                 'type' => '',
                 'read' => false,
                 'edit' => false,

@@ -1,6 +1,8 @@
 <flux:main container>
     <x-manta.breadcrumb :$breadcrumb />
 
+    @include('manta-cms::livewire.default.manta-default-openai-form')
+
     @include('manta-cms::livewire.default.manta-default-tabs', [
         'tabs' => $tablistModule,
         'tablistShow' => $tablistModuleShow,

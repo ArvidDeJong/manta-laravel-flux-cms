@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use Livewire\Livewire;
-
+use Manta\FluxCMS\Livewire\Routeseo\RouteseoList;
+use Manta\FluxCMS\Livewire\Routeseo\RouteseoUpdate;
 
 Route::middleware(['web', 'auth:staff'])->prefix(config('manta-cms.routes.prefix'))
     ->name('manta-cms.')
@@ -34,6 +35,10 @@ Route::middleware(['web', 'auth:staff'])->prefix(config('manta-cms.routes.prefix
         Route::get('/modules/{mantaModule}/bekijken', \Manta\FluxCMS\Livewire\MantaModule\MantaModuleRead::class)->name('manta-module.read');
 
         Route::get('/options', \Manta\FluxCMS\Livewire\Option\OptionUpdate::class)->name('option.update');
+
+        // Routes kunnen nu worden gedefinieerd als:
+        Route::get('/routeseo', RouteseoList::class)->name('routeseo.list');
+        Route::get('/routeseo/{routeseo}/edit', RouteseoUpdate::class)->name('routeseo.update');
 
         Route::get("/upload", \Manta\FluxCMS\Livewire\Upload\UploadList::class)->name('upload.list');
         Route::get("/upload/toevoegen", \Manta\FluxCMS\Livewire\Upload\UploadCreate::class)->name('upload.create');

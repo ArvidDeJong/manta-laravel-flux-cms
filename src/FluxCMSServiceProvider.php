@@ -421,5 +421,9 @@ class FluxCMSServiceProvider extends ServiceProvider
 
         // Option componenten
         Livewire::component('manta-cms::option.update', \Manta\FluxCMS\Livewire\Option\OptionUpdate::class);
+
+        // Routeseo componenten
+        Livewire::component('manta-cms::routeseo.list', \Manta\FluxCMS\Livewire\Routeseo\RouteseoList::class);
+        Livewire::component('manta-cms::routeseo.update', \Manta\FluxCMS\Livewire\Routeseo\RouteseoUpdate::class);
     }
 }
