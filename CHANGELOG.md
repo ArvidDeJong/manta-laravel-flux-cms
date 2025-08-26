@@ -5,7 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.3] - 2025-08-26
+
+### Added
+- **SeoTrait improvements**: Enhanced loadSeoData() method with database priority over hardcoded values
+- **Database-driven SEO**: SEO waarden kunnen nu overschreven worden via CMS database
+- **Automatic SEO record creation**: Creates Routeseo records automatically when they don't exist
+
+### Changed
+- **SEO priority logic**: Database waarden hebben voorrang op hardcoded waarden in SeoTrait
+- **SeoTrait loadSeoData()**: Improved logic to respect existing programmatic SEO values when database is empty
+- **Performance optimization**: Removed GetRouteSeo middleware dependency for better performance
+
+### Removed
+- **GetRouteSeo middleware**: Functionality moved to SeoTrait for better component-level control
+
+### Technical Improvements
+- Enhanced SEO architecture with component-level control
+- Better separation of concerns between middleware and traits
+- Improved database query efficiency for SEO data
+
+## [1.1.2] - 2025-08-26
 
 ### Added
 - MantaRoute model for managing Laravel routes
