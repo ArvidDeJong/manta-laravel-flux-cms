@@ -50,10 +50,9 @@
         }
     </style>
     @stack('styles')
-    @fluxAppearance
 </head>
 
-<body class="min-h-screen bg-white dark:bg-zinc-800">
+<body>
     <x-manta.cms.header-flux-php />
     {{ $slot }}
     <flux:toast position="top right" />

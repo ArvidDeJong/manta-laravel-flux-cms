@@ -14,10 +14,9 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
-    @fluxAppearance
 </head>
 
-<body class="min-h-screen bg-white dark:bg-zinc-800">
+<body>
 
     {{ $slot }}
     <flux:toast position="top right" />

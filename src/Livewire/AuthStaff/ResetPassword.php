@@ -26,8 +26,8 @@ class ResetPassword extends Component
 
     public function mount($token = null)
     {
-        $this->token = $token ?? request()->route('token');
-        
+        $this->token = $token ?? request()->route('token') ?? request()->get('token') ?? '';
+
         if (request()->has('email')) {
             $this->email = request()->get('email');
         }
@@ -58,7 +58,7 @@ class ResetPassword extends Component
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            return redirect()->intended(route(config('manta-cms.staff_home', 'flux-cms.dashboard')))
+            return redirect()->intended(route('manta-cms.dashboard'))
                 ->with('status', __('Wachtwoord is succesvol gereset.'));
         }
 
