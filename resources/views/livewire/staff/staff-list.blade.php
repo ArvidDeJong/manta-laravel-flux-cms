@@ -1,8 +1,8 @@
 <flux:main container>
     <x-manta.breadcrumb :$breadcrumb />
-    <div class="flex items-center justify-between mt-4">
+    <div class="mt-4 flex items-center justify-between">
         <div>
-            <flux:button icon="plus" href="{{ route('manta-cms.staff.create') }}">
+            <flux:button icon="plus" href="{{ route($this->module_routes['create']) }}">
                 Toevoegen
             </flux:button>
         </div>
@@ -50,9 +50,10 @@
                         {{ $item->lastLogin ? Carbon\Carbon::parse($item->lastLogin)->format('d-m-Y H:i') : null }}
                     </flux:table.cell>
                     <flux:table.cell>
-                        <flux:button size="sm" href="{{ route('manta-cms.staff.rights', $item) }}"
+                        <flux:button size="sm" href="{{ route($this->module_routes['rights'], $item) }}"
                             icon="key" />
-                        <flux:button size="sm" href="{{ route('manta-cms.staff.read', $item) }}" icon="eye" />
+                        <flux:button size="sm" href="{{ route($this->module_routes['read'], $item) }}"
+                            icon="eye" />
                         @if (Auth::user('staff')->id != $item->id)
                             <x-manta.tables.delete-modal :item="$item" />
                         @endif

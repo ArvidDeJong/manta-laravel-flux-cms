@@ -8,8 +8,7 @@ return [
         "single" => "Gebruiker",
         "multiple" => "Gebruikers"
     ],
-    "tabtitle" => "title",
-    "tab_title" => "title",
+    "tabtitle" => "firstname",
     "type" => "tool",
     "active" => true,
     "locale" => "nl",

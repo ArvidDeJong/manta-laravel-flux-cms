@@ -23,6 +23,7 @@ class ModuleSettingsService
             }
         }
 
+        // Only create if module doesn't exist
         if (!$settingsModel && $fileSettings) {
             // Create new module if it doesn't exist and we have file settings
             $createData = [
@@ -95,7 +96,7 @@ class ModuleSettingsService
             
             $settingsModel = MantaModule::create($createData);
 
-            Log::info("Successfully imported {$moduleName} module settings from file");
+            Log::info("Successfully created {$moduleName} module settings from file");
         } elseif ($settingsModel && $fileSettings) {
             // Update existing module with file settings, respecting fillables and casts
             $updateData = [];
@@ -127,25 +128,41 @@ class ModuleSettingsService
             foreach ($fieldMapping as $fileKey => $modelAttribute) {
                 if (isset($fileSettings[$fileKey]) && in_array($modelAttribute, $fillables)) {
                     $value = $fileSettings[$fileKey];
+                    $currentValue = $settingsModel->getAttribute($modelAttribute);
                     
-                    // Apply casts if defined
-                    if (isset($casts[$modelAttribute])) {
-                        $castType = $casts[$modelAttribute];
-                        
-                        switch ($castType) {
-                            case 'array':
-                                $value = is_array($value) ? $value : [];
-                                break;
-                            case 'boolean':
-                                $value = (bool) $value;
-                                break;
-                            case 'integer':
-                                $value = (int) $value;
-                                break;
-                        }
+                    // Only update if current value is empty OR if field should be array but isn't
+                    $shouldUpdate = false;
+                    
+                    // Check if current value is empty (null, empty string, empty array)
+                    if (is_null($currentValue) || $currentValue === '' || (is_array($currentValue) && empty($currentValue))) {
+                        $shouldUpdate = true;
                     }
                     
-                    $updateData[$modelAttribute] = $value;
+                    // Check if field should be array but current value is not an array
+                    if (isset($casts[$modelAttribute]) && $casts[$modelAttribute] === 'array' && !is_array($currentValue)) {
+                        $shouldUpdate = true;
+                    }
+                    
+                    if ($shouldUpdate) {
+                        // Apply casts if defined
+                        if (isset($casts[$modelAttribute])) {
+                            $castType = $casts[$modelAttribute];
+                            
+                            switch ($castType) {
+                                case 'array':
+                                    $value = is_array($value) ? $value : [];
+                                    break;
+                                case 'boolean':
+                                    $value = (bool) $value;
+                                    break;
+                                case 'integer':
+                                    $value = (int) $value;
+                                    break;
+                            }
+                        }
+                        
+                        $updateData[$modelAttribute] = $value;
+                    }
                 }
             }
             

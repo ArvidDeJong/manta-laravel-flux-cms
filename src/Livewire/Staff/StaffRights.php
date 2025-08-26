@@ -47,6 +47,9 @@ class StaffRights extends Component
         // Set current staff rights
         $this->rights = $staff->rights ?? [];
 
+
+
+
         $this->getLocaleInfo();
 
         $this->getTablist([
@@ -54,7 +57,7 @@ class StaffRights extends Component
                 'name' => 'rights',
                 'title' => 'Rechten',
                 'tablistShow' => 'rights',
-                'url' => route('manta-cms.staff.rights', [$this->route_name => $this->item]),
+                'url' => route($this->module_routes['rights'], $this->item),
                 'active' => true,
             ],
         ]);

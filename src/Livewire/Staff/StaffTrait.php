@@ -7,22 +7,30 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Locked;
 use Manta\FluxCMS\Models\MantaModule;
+use Manta\FluxCMS\Services\ModuleSettingsService;
 
 trait StaffTrait
 {
 
     public function __construct()
     {
-        $this->route_prefix = 'manta-cms';
-        $this->route_name = 'staff';
-        $this->route_list = route($this->route_prefix . '.' . $this->route_name . '.list');
+        $this->module_routes = [
+            'name' => 'staff',
+            'list' => 'manta-cms.staff.list',
+            'create' => 'manta-cms.staff.create',
+            'update' => 'manta-cms.staff.update',
+            'read' => 'manta-cms.staff.read',
+            'upload' => 'manta-cms.staff.upload',
+            'settings' => 'manta-cms.staff.settings',
+            'rights' => 'manta-cms.staff.rights',
+            'maps' => null,
+        ];
 
-        $settings = MantaModule::where('name', 'staff')->first()->toArray();
-
+        $settings = ModuleSettingsService::ensureModuleSettings('staff', 'darvis/manta-laravel-flux-cms');
         $this->config = $settings;
 
-        $this->fields = $settings['fields'];
-        $this->tab_title = isset($settings['tab_title']) ? $settings['tab_title'] : null;
+        $this->fields = $settings['fields'] ?? [];
+        $this->tab_title = $settings['tabtitle'] ?? null;
 
         $this->moduleClass = 'Manta\FluxCMS\Models\Staff';
     }

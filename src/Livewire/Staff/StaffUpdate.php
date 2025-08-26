@@ -55,7 +55,7 @@ class StaffUpdate extends Component
                 'name' => 'Rechten',
                 'title' => 'Rechten',
                 'tablistShow' => 'rights',
-                'url' => route('manta-cms.staff.rights', [$this->route_name => $this->item]),
+                'url' => route($this->module_routes['rights'], $this->item),
                 'active' => false,
             ],
         ]);
