@@ -29,9 +29,17 @@
                <flux:callout.text>
                    {!! $openaiResult !!}
 
-                   @if ($openaiImageBase64)
-                       <img src="data:image/png;base64,{{ $openaiImageBase64 }}" alt="Generated Image">
-                   @endif
+                   {{-- @if (!$openaiImage && $openaiImagePrompt)
+                      <div class="mt-4">
+                          <flux:button icon="photo" wire:click="generateOpenaiImage" variant="outline" size="sm">
+                              Genereer afbeelding
+                          </flux:button>
+                      </div>
+                  @endif
+                  
+                  @if ($openaiImage)
+                      <img src="{{ $openaiImage }}" alt="Generated Image" class="mt-4 h-auto max-w-full rounded">
+                  @endif --}}
                </flux:callout.text>
            </flux:callout>
        @endif

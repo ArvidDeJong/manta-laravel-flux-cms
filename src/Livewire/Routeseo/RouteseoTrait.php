@@ -5,6 +5,7 @@ namespace Manta\FluxCMS\Livewire\Routeseo;
 use Flux\Flux;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Manta\FluxCMS\Models\Routeseo;
+use Manta\FluxCMS\Services\MantaOpenai;
 use Manta\FluxCMS\Services\ModuleSettingsService;
 use Manta\FluxCMS\Services\SeoOptimizationService;
 
@@ -96,34 +97,20 @@ trait RouteseoTrait
     public function getOpenaiResult()
     {
         Flux::modals()->close();
-        $seoService = new SeoOptimizationService();
 
-        $result = $seoService->generateSeoContent([
-            'subject' => $this->openaiSubject,
-            'description' => $this->openaiDescription,
-            'route' => $this->route,
-            'lang' => $this->locale ?? 'nl',
-        ]);
+        $ai = app(MantaOpenai::class);
 
-        // Vul de gegenereerde SEO content in de velden
+        $result = $ai->generate(
+            $this->openaiSubject . ' ' . $this->openaiDescription,
+            [
+                'title' => 'Korte titel',
+                'seo_title' => 'SEO titel',
+                'seo_description' => 'SEO beschrijving',
+            ]
+        );
+
+        $this->title = $result['title'];
         $this->seo_title = $result['seo_title'];
         $this->seo_description = $result['seo_description'];
-
-        // Als er nog geen titel is, gebruik de gegenereerde titel
-        if (empty($this->title)) {
-            $this->title = $result['title'];
-        }
-
-        // Sla keywords op in data array voor eventueel later gebruik
-        $this->data = array_merge($this->data ?? [], [
-            'generated_keywords' => $result['keywords'],
-            'generated_at' => now()->toISOString(),
-        ]);
-
-        $this->openaiResult = "SEO content gegenereerd:<br>" .
-            "Titel: {$result['title']}<br>" .
-            "SEO Titel: {$result['seo_title']}<br>" .
-            "SEO Beschrijving: {$result['seo_description']}<br>" .
-            "Keywords: " . implode(', ', $result['keywords']);
     }
 }

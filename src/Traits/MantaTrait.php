@@ -54,6 +54,7 @@ trait MantaTrait
     public ?string $openaiDescription = null;
     public ?string $openaiImage = null;
     public ?string $openaiResult = null;
+    public ?string $openaiImagePrompt = null;
 
     public function updatedTablistShow($value)
     {
