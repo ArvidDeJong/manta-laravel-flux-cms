@@ -218,6 +218,8 @@ class Upload extends Model
                 Storage::disk($disk)->setVisibility($location . $filename, 'public');
             }
         }
+
+
         $extension =  strtolower($extension);
         $values = [
             'model' => $model,

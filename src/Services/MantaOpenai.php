@@ -2,8 +2,12 @@
 
 namespace Manta\FluxCMS\Services;
 
-use OpenAI; // via openai-php/client
+use OpenAI;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
+use Manta\FluxCMS\Models\Upload;
 
 class MantaOpenai
 {
@@ -14,13 +18,6 @@ class MantaOpenai
         $this->client = OpenAI::client(env('OPENAI_API_KEY'));
     }
 
-    /**
-     * Genereer content voor de opgegeven velden.
-     *
-     * @param  string $prompt  Globale omschrijving
-     * @param  array  $fields  ['title' => 'omschrijving', 'body' => 'omschrijving', ...]
-     * @return array
-     */
     public function generate(string $prompt, array $fields): array
     {
         $messages = [
@@ -52,8 +49,49 @@ class MantaOpenai
 
             return json_decode($content, true) ?: [];
         } catch (\Throwable $e) {
-            Log::error('OpenAI generate error: ' . $e->getMessage());
+            Log::error('MantaOpenai generate error: ' . $e->getMessage());
             return [];
+        }
+    }
+
+    public function generateImage(string $prompt, string $model, int|string $model_id, string $size = '1024x1024'): ?string
+    {
+
+        try {
+            $result = $this->client->images()->create([
+                'model' => 'dall-e-3',
+                'prompt' => $prompt,
+                'n' => 1,
+                'size' => $size,
+                'response_format' => 'url',
+            ]);
+
+            $imageUrl = $result->data[0]->url ?? null;
+
+            if (!$imageUrl) {
+                return null;
+            }
+
+            // Download afbeelding van OpenAI
+            $imageContent = Http::timeout(30)->get($imageUrl)->body();
+
+
+            // // Genereer unieke bestandsnaam
+            // $filename = 'ai-' . now()->format('Ymd-His') . '-' . Str::random(8) . '.png';
+            // $path = 'ai/images/' . $filename;
+
+            // // Sla afbeelding op in storage/app/public
+            // Storage::disk('public')->put($path, $imageContent);
+            // dd($imageContent);
+
+            $upload = new Upload();
+            $result = $upload->upload($imageContent, $model,  $model_id, ['disk' => 'public', 'filename' => 'ai-' . now()->format('Ymd-His') . '-' . Str::random(8) . '.png']);
+
+            // Return publieke URL naar lokaal opgeslagen bestand
+            return  $result->id;
+        } catch (\Throwable $e) {
+            Log::error('MantaOpenai generateImage error: ' . $e->getMessage());
+            return null;
         }
     }
 

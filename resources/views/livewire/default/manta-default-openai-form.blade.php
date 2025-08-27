@@ -13,6 +13,9 @@
                description="Schrijf het onderwerp van je bericht" />
            <flux:textarea rows="auto" wire:model="openaiDescription" label="Bericht"
                description="Omschrijf de details van je bericht" />
+           @if ($openaiImagePossible)
+               <flux:checkbox wire:model="openaiImageGenerate" label="Afbeelding genereren" />
+           @endif
 
            <div class="flex">
                <flux:spacer />
@@ -43,4 +46,11 @@
                </flux:callout.text>
            </flux:callout>
        @endif
+
+       <div class="flex flex-wrap">
+           @foreach ($uploads as $upload)
+               <img src="{{ $upload->getImage()['src'] }}" alt="{{ $upload->title }}" height="100"
+                   style="object-fit: cover; height: 100px; margin-left: 10px;" data-fancybox="gallery" data-caption="">
+           @endforeach
+       </div>
    @endif
