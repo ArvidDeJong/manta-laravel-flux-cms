@@ -68,6 +68,8 @@ trait CompanyTrait
     public ?string $birthcity = null;
     public ?string $phone = null;
     public ?string $phone2 = null;
+    public ?string $url = null;
+    public ?string $website = null;
     public ?string $bsn = null;
     public ?string $iban = null;
     public ?string $title = null;

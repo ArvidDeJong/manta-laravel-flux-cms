@@ -47,6 +47,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('phone2')->nullable();
+            $table->string('url')->nullable();
+            $table->string('website')->nullable();
             $table->string('bsn')->nullable();
             $table->string('iban')->nullable();
             $table->date('birthdate')->nullable();

@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.6] - 2025-08-28
 
+### Added
+- **OpenAI Image Gallery UI**: Improved user interface for OpenAI generated image gallery
+
 ### Changed
+- **SEO Fields**: Made SEO title and description fields nullable for better flexibility
 - Version field removed from `composer.json` for better package management
+- Changelog content translated from Dutch to English for international accessibility
 
 ## [1.1.5] - 2025-08-27
 

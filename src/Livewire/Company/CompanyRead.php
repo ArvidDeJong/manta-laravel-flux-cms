@@ -53,6 +53,8 @@ class CompanyRead extends Component
                 'email',
                 'phone',
                 'phone2',
+                'url',
+                'website',
                 'bsn',
                 'iban',
                 'birthdate',

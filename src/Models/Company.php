@@ -80,6 +80,8 @@ class Company extends Model
         'email',
         'phone',
         'phone2',
+        'url',
+        'website',
         'bsn',
         'iban',
         'birthdate',

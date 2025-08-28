@@ -198,6 +198,20 @@ return [
             "read" => true,
             "required" => false
         ],
+        "url" => [
+            "active" => true,
+            "type" => "text",
+            "title" => "Url",
+            "read" => true,
+            "required" => false
+        ],
+        "website" => [
+            "active" => true,
+            "type" => "text",
+            "title" => "Website",
+            "read" => true,
+            "required" => false
+        ],
         "bsn" => [
             "active" => true,
             "type" => "text",

@@ -89,6 +89,8 @@ class CompanyCreate extends Component
             'birthcity',
             'phone',
             'phone2',
+            'url',
+            'website',
             'bsn',
             'iban',
             'title',
