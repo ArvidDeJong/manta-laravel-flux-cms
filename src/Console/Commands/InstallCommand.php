@@ -18,6 +18,7 @@ class InstallCommand extends Command
     protected $signature = 'manta:install 
                             {--force : Overwrite existing files}
                             {--with-migrations : Also publish migrations}
+                            {--with-views : Also publish views}
                             {--skip-provider : Skip registering the ServiceProvider}';
 
     /**
@@ -42,8 +43,10 @@ class InstallCommand extends Command
         // Step 2: Publish configuration
         $this->publishConfig();
 
-        // Step 3: Publish views
-        $this->publishViews();
+        // Step 3: Publish views (optional)
+        if ($this->option('with-views')) {
+            $this->publishViews();
+        }
 
         // Step 4: Publish public assets
         $this->publishPublicAssets();

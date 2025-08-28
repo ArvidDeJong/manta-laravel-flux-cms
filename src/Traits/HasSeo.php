@@ -13,7 +13,7 @@ trait HasSeo
     public $seo_author;
     public $canonical_url;
     public $robots;
-    
+
     // Open Graph properties
     public $og_title;
     public $og_description;
@@ -23,19 +23,19 @@ trait HasSeo
     public $og_image_alt;
     public $og_type;
     public $og_url;
-    
+
     // Twitter Card properties
     public $twitter_title;
     public $twitter_description;
     public $twitter_image;
     public $twitter_image_alt;
     public $twitter_card;
-    
+
     // Schema.org properties
     public $schema_type;
     public $additional_schema;
     public $structured_data = true;
-    
+
     // Additional properties
     public $theme_color;
     public $tile_color;
@@ -43,7 +43,7 @@ trait HasSeo
     /**
      * Set SEO title
      */
-    public function setSeoTitle(string $title): self
+    public function setSeoTitle(?string $title): self
     {
         $this->seo_title = $title;
         return $this;
@@ -52,7 +52,7 @@ trait HasSeo
     /**
      * Set SEO description
      */
-    public function setSeoDescription(string $description): self
+    public function setSeoDescription(?string $description): self
     {
         $this->seo_description = $description;
         return $this;
@@ -155,7 +155,7 @@ trait HasSeo
         // Schema.org
         if (isset($data['schema_type'])) {
             $this->setStructuredData(
-                $data['schema_type'], 
+                $data['schema_type'],
                 $data['additional_schema'] ?? null
             );
         }
@@ -215,7 +215,7 @@ trait HasSeo
             'theme_color' => $this->theme_color,
             'tile_color' => $this->tile_color,
             'page_title' => $this->getPageTitle(),
-        ], function($value) {
+        ], function ($value) {
             return $value !== null;
         });
     }

@@ -8,9 +8,7 @@
 
     <div class="mt-4 flex items-center justify-between">
         <div>
-            <flux:button icon="plus" href="{{ route('manta-cms.manta-module.create') }}">
-                Toevoegen
-            </flux:button>
+
         </div>
         <div style="width: 300px">
             <flux:input type="search" wire:model="search" placeholder="Zoeken..." />
@@ -54,12 +52,12 @@
                     <flux:table.cell>
                         <flux:badge
                             :color="match($item->type) {
-                                                                                                                                                                            'cms' => 'blue',
-                                                                                                                                                                            'webshop' => 'green', 
-                                                                                                                                                                            'tools' => 'orange',
-                                                                                                                                                                            'dev' => 'red',
-                                                                                                                                                                            default => 'gray'
-                                                                                                                                                                        }">
+                                                                                                                                                                                                        'cms' => 'blue',
+                                                                                                                                                                                                        'webshop' => 'green',
+                                                                                                                                                                                                        'tools' => 'orange',
+                                                                                                                                                                                                        'dev' => 'red',
+                                                                                                                                                                                                        default => 'gray'
+                                                                                                                                                                                                    }">
                             {{ ucfirst($item->type) }}
                         </flux:badge>
                     </flux:table.cell>

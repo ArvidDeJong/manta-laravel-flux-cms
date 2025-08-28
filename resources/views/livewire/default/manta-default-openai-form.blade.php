@@ -24,33 +24,16 @@
                </flux:button>
            </div>
        </flux:modal>
-
-       @if ($openaiResult)
-           <flux:callout icon="check-circle" variant="success">
-               <flux:callout.heading>SEO Content Gegenereerd</flux:callout.heading>
-
-               <flux:callout.text>
-                   {!! $openaiResult !!}
-
-                   {{-- @if (!$openaiImage && $openaiImagePrompt)
-                      <div class="mt-4">
-                          <flux:button icon="photo" wire:click="generateOpenaiImage" variant="outline" size="sm">
-                              Genereer afbeelding
-                          </flux:button>
-                      </div>
-                  @endif
-                  
-                  @if ($openaiImage)
-                      <img src="{{ $openaiImage }}" alt="Generated Image" class="mt-4 h-auto max-w-full rounded">
-                  @endif --}}
-               </flux:callout.text>
-           </flux:callout>
-       @endif
-
-       <div class="flex flex-wrap">
-           @foreach ($uploads as $upload)
-               <img src="{{ $upload->getImage()['src'] }}" alt="{{ $upload->title }}" height="100"
-                   style="object-fit: cover; height: 100px; margin-left: 10px;" data-fancybox="gallery" data-caption="">
-           @endforeach
-       </div>
+       <flux:callout icon="check-circle" variant="success">
+           <flux:callout.heading>ChatGPT Afbeeldingen</flux:callout.heading>
+           <flux:callout.text>
+               <div class="flex flex-wrap">
+                   @foreach ($uploads as $upload)
+                       <img src="{{ $upload->getImage()['src'] }}" alt="{{ $upload->title }}" height="100"
+                           style="object-fit: cover; height: 100px; margin-left: 10px;" data-fancybox="gallery"
+                           data-caption="">
+                   @endforeach
+               </div>
+           </flux:callout.text>
+       </flux:callout>
    @endif

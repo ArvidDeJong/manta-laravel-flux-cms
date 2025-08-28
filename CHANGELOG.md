@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.6] - 2025-08-28
+
+### Changed
+- Version field verwijderd uit `composer.json` voor betere package management
+
 ## [1.1.5] - 2025-08-27
+
+### Added
+- **OpenAI Image Generation**: Nieuwe functionaliteit voor AI-gegenereerde afbeeldingen
+- **UI Controls**: Interface voor het beheren van image generation parameters
+- **Display Gallery**: Galerij weergave voor gegenereerde afbeeldingen
 
 ### Changed
 - Versienummer bijgewerkt in `composer.json` naar 1.1.5

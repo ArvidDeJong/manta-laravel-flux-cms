@@ -317,20 +317,26 @@ trait MantaTrait
         $this->settingsArr = $settingsArr;
 
         $config = collect($this->config);
+
         $emailcodes = [];
         if (isset($this->config['ereg']['tables']) && count($this->config['ereg']['tables']) > 0) {
+            // dd($this->config['ereg']['tables']);
             foreach ($this->config['ereg']['tables'] as $table => $values) {
-                $columns = Schema::getColumnListing($table);
+
+                $columns = Schema::getColumnListing((new $this->moduleClass)->getTable());
+                // dd($table, $values, $columns);
                 foreach ($columns as $column) {
-                    if (in_array($column, $values['select']) && isset($config->get('fields')[$column]) && $config->get('fields')[$column]['active'] == true) {
+                    if (isset($config->get('fields')[$column]) && $config->get('fields')[$column]['active'] == true) {
                         $emailcodes[] = ['title' => $config->get('fields')[$column]['title'], 'value' => '{{ $' . $values['variable'] . '->' . $column . ' }}'];
                     }
                 }
             }
         }
+
         usort($emailcodes, function ($a, $b) {
             return strcmp($a['title'], $b['title']);
         });
+
         $this->emailcodes = $emailcodes;
     }
 
