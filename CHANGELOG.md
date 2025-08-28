@@ -8,18 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.6] - 2025-08-28
 
 ### Changed
-- Version field verwijderd uit `composer.json` voor betere package management
+- Version field removed from `composer.json` for better package management
 
 ## [1.1.5] - 2025-08-27
 
 ### Added
-- **OpenAI Image Generation**: Nieuwe functionaliteit voor AI-gegenereerde afbeeldingen
-- **UI Controls**: Interface voor het beheren van image generation parameters
-- **Display Gallery**: Galerij weergave voor gegenereerde afbeeldingen
+- **OpenAI Image Generation**: New functionality for AI-generated images
+- **UI Controls**: Interface for managing image generation parameters
+- **Display Gallery**: Gallery view for generated images
 
 ### Changed
-- Versienummer bijgewerkt in `composer.json` naar 1.1.5
-- Changelog aangevuld voor nieuwe release
+- Version number updated in `composer.json` to 1.1.5
+- Changelog updated for new release
 
 ## [1.1.4] - 2025-08-26
 
@@ -43,11 +43,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **SeoTrait improvements**: Enhanced loadSeoData() method with database priority over hardcoded values
-- **Database-driven SEO**: SEO waarden kunnen nu overschreven worden via CMS database
+- **Database-driven SEO**: SEO values can now be overridden via CMS database
 - **Automatic SEO record creation**: Creates Routeseo records automatically when they don't exist
 
 ### Changed
-- **SEO priority logic**: Database waarden hebben voorrang op hardcoded waarden in SeoTrait
+- **SEO priority logic**: Database values take precedence over hardcoded values in SeoTrait
 - **SeoTrait loadSeoData()**: Improved logic to respect existing programmatic SEO values when database is empty
 - **Performance optimization**: Removed GetRouteSeo middleware dependency for better performance
 
