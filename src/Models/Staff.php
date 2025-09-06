@@ -2,6 +2,8 @@
 
 namespace Manta\FluxCMS\Models;
 
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,12 +16,13 @@ use Manta\FluxCMS\Traits\HasUploadsTrait;
 /**
  * Staff model voor het beheren van medewerkers/gebruikersaccounts.
  */
-class Staff extends Authenticatable
+class Staff extends Authenticatable implements CanResetPasswordContract
 {
     use HasFactory;
     use SoftDeletes;
     use Notifiable;
     use HasUploadsTrait;
+    use CanResetPassword;
 
     /**
      * The attributes that are mass assignable.

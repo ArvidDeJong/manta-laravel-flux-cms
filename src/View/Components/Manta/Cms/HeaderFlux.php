@@ -2,6 +2,7 @@
 
 namespace Manta\FluxCMS\View\Components\Manta\Cms;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 use Manta\FluxCMS\Models\MantaNav;
@@ -29,15 +30,15 @@ class HeaderFlux extends Component
             ->orderBy('sort')
             ->get();
 
-        $this->toolsModules = MantaNav::active()
+        $this->toolsModules = Auth::user()->admin ? MantaNav::active()
             ->byType('tool')
             ->orderBy('sort')
-            ->get();
+            ->get() : collect();
 
-        $this->devModules = MantaNav::active()
+        $this->devModules = Auth::user()->developer ? MantaNav::active()
             ->byType('dev')
             ->orderBy('sort')
-            ->get();
+            ->get() : collect();
     }
 
     /**

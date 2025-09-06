@@ -74,4 +74,12 @@ class MantaNavList extends Component
         $status = $item->active ? 'geactiveerd' : 'gedeactiveerd';
         session()->flash('message', "Navigatie-item '{$item->title}' is {$status}.");
     }
+
+    public function updateType($id, $type)
+    {
+        $item = MantaNav::findOrFail($id);
+        $item->update(['type' => $type]);
+
+        Flux::toast("Type gewijzigd naar '{$type}'", duration: 1000, variant: 'success');
+    }
 }

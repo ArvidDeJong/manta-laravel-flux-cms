@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.8] - 2025-09-06
+
+### Added
+- **MantaNavList**: Added `updateType` method for dynamic navigation item type updates
+- **Staff Model**: Implemented password reset functionality with `CanResetPassword` interface and trait
+- **HeaderFlux Component**: Added role-based access control for tools and dev modules
+
+### Changed
+- **Navigation Management**: Enhanced MantaNavList with real-time type switching capabilities
+- **Staff Authentication**: Staff users can now reset their passwords through standard Laravel mechanisms
+- **Admin Interface**: Tools and dev modules now respect user admin/developer permissions
+
+### Security
+- **Access Control**: Restricted tools module access to admin users only
+- **Permission System**: Dev modules now only visible to users with developer permissions
+
 ## [1.1.7] - 2025-08-28
 
 ### Added
