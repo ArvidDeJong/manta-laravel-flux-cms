@@ -57,13 +57,19 @@ class WebflowImage extends Component
             $this->src = $this->upload->getImage()['src'] ?? $this->fallbackSrc ?? '';
             $this->srcset = $this->generateSrcset();
         } else {
-            $this->src = $src ?: $this->fallbackSrc ?? '';
+            // Gebruik fallbackSrc als src leeg is en fallbackSrc beschikbaar is
+            $this->src = $src ?: ($this->fallbackSrc ?? '');
             $this->srcset = $srcset;
+            
+            // Auto-generate srcset if not provided but basePath is given
+            if (empty($this->srcset) && !empty($this->basePath)) {
+                $this->srcset = $this->generateWebflowSrcset();
+            }
         }
     }
 
     /**
-     * Genereer automatisch srcset op basis van breakpoints
+     * Genereer automatisch srcset op basis van breakpoints voor Upload objecten
      */
     private function generateSrcset(): string
     {
@@ -77,6 +83,31 @@ class WebflowImage extends Component
             $imageData = $this->upload->getImage($width);
             if (isset($imageData['src'])) {
                 $srcsetParts[] = $imageData['src'] . ' ' . $width . 'w';
+            }
+        }
+
+        return implode(', ', $srcsetParts);
+    }
+
+    /**
+     * Genereer automatisch srcset op basis van basePath (Webflow conventie)
+     */
+    private function generateWebflowSrcset(): string
+    {
+        if (empty($this->basePath)) {
+            return '';
+        }
+
+        $srcsetParts = [];
+        $basePathWithoutExt = pathinfo($this->basePath, PATHINFO_DIRNAME) . '/' . pathinfo($this->basePath, PATHINFO_FILENAME);
+
+        foreach ($this->breakpoints as $width) {
+            if ($width === max($this->breakpoints)) {
+                // Largest size uses original filename
+                $srcsetParts[] = "{$this->basePath} {$width}w";
+            } else {
+                // Smaller sizes use -p-{width} suffix (Webflow convention)
+                $srcsetParts[] = "{$basePathWithoutExt}-p-{$width}.{$this->extension} {$width}w";
             }
         }
 

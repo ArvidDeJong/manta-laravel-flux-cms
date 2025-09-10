@@ -57,6 +57,7 @@ trait MantaTrait
     public bool $openaiImagePossible = false;
     public ?string $openaiImagePrompt = null;
     public bool $openaiImageGenerate = true;
+    public bool $openaiImageAdd = false;
 
     public function updatedTablistShow($value)
     {

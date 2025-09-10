@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.9] - 2025-09-10
+
+### Added
+- **WebflowImage Component**: Auto-generate srcset functionality for Webflow images using basePath
+- **OpenAI Integration**: Added `openaiImageAdd` property to MantaTrait for image selection control
+- **OpenAI Form**: Added checkbox to allow adding OpenAI generated images to messages
+
+### Changed
+- **WebflowImage Component**: Enhanced fallback image handling and srcset generation
+- **OpenAI Image Gallery**: Improved conditional display of OpenAI images gallery
+- **Form Field List**: Updated styling and layout improvements
+- **Navigation**: Minor improvements to MantaNavList component
+
+### Fixed
+- **WebflowImage Component**: Better handling of empty src values with fallback images
+- **OpenAI Images**: Fixed image gallery display logic to only show when images exist
+
 ## [1.1.8] - 2025-09-06
 
 ### Added

@@ -7,7 +7,7 @@
         'tablistShow' => $tablistModuleShow,
     ])
 
-    <div class="mt-8"></div>
-
-    @include('manta-cms::includes.form_field_list')
+    <div class="pt-8">
+        @include('manta-cms::includes.form_field_list')
+    </div>
 </flux:main>

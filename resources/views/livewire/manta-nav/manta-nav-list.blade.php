@@ -23,7 +23,8 @@
                             <flux:select.option value="dev">Dev</flux:select.option>
                         </flux:select>
                         @if (!$url)
-                            <flux:select label="Route" placeholder="Route" wire:model.live="route">
+                            <flux:select variant="listbox" searchable label="Route" placeholder="Route"
+                                wire:model.live="route">
                                 <flux:select.option value="">Selecteer een route</flux:select.option>
                                 @foreach ($routes as $route)
                                     <flux:select.option value="{{ $route->name }}">{{ $route->name }}

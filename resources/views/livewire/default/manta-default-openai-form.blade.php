@@ -1,6 +1,6 @@
    @if (env('OPENAI_API_KEY') && isset($fields['chatgpt']) && $fields['chatgpt']['active'] == true)
        <flux:modal.trigger name="chatgpt-modal">
-           <flux:button icon="arrow-path" class="mb-8">Gebruik ChatGPT</flux:button>
+           <flux:button icon="arrow-path">Gebruik ChatGPT</flux:button>
        </flux:modal.trigger>
 
        <flux:modal name="chatgpt-modal" class="space-y-6 md:w-96">
@@ -24,16 +24,25 @@
                </flux:button>
            </div>
        </flux:modal>
-       <flux:callout icon="check-circle" variant="success">
-           <flux:callout.heading>ChatGPT Afbeeldingen</flux:callout.heading>
-           <flux:callout.text>
-               <div class="flex flex-wrap">
-                   @foreach ($uploads as $upload)
-                       <img src="{{ $upload->getImage()['src'] }}" alt="{{ $upload->title }}" height="100"
-                           style="object-fit: cover; height: 100px; margin-left: 10px;" data-fancybox="gallery"
-                           data-caption="">
-                   @endforeach
-               </div>
-           </flux:callout.text>
-       </flux:callout>
+       @if (Manta\FluxCMS\Models\Upload::where('model_id', 'openai')->get()->count() > 0)
+           <flux:callout icon="check-circle" variant="success">
+               <flux:callout.heading>ChatGPT Afbeeldingen</flux:callout.heading>
+               <flux:callout.text>
+                   <div class="flex flex-wrap">
+                       @foreach (Manta\FluxCMS\Models\Upload::where('model_id', 'openai')->get() as $upload)
+                           <img src="{{ $upload->getImage()['src'] }}" alt="{{ $upload->title }}" height="100"
+                               style="object-fit: cover; height: 100px; margin-left: 10px;" data-fancybox="gallery"
+                               data-caption="">
+                       @endforeach
+                   </div>
+
+                   <flux:field variant="inline" class="mt-4">
+                       <flux:checkbox wire:model="openaiImageAdd" />
+                       <flux:label>Voeg toe aan bericht</flux:label>
+                       <flux:error name="openaiImageAdd" />
+                   </flux:field>
+
+               </flux:callout.text>
+           </flux:callout>
+       @endif
    @endif
