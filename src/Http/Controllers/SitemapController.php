@@ -24,7 +24,7 @@ class SitemapController extends Controller
             $sitemap = Cache::get($cacheKey);
         } else {
             $sitemap = $this->generateSitemap();
-            
+
             if ($cacheEnabled) {
                 Cache::put($cacheKey, $sitemap, $cacheTtl);
             }
@@ -69,13 +69,23 @@ class SitemapController extends Controller
     private function getDynamicRoutes(): array
     {
         $excludePrefixes = config('sitemap.dynamic_routes.exclude_prefixes', ['cms', 'admin', 'staff', 'account']);
+        $excludePatterns = config('sitemap.dynamic_routes.exclude_patterns', []);
         $defaultChangefreq = config('sitemap.dynamic_routes.default_changefreq', 'weekly');
         $defaultPriority = config('sitemap.dynamic_routes.default_priority', '0.8');
 
         // Get all active public routes (not requiring authentication)
         $publicRoutes = MantaRoute::active()
-            ->whereNotIn('prefix', $excludePrefixes)
-            ->get();
+            ->get()
+            ->filter(function ($route) use ($excludePrefixes, $excludePatterns) {
+                // Check if prefix starts with any excluded prefix
+                foreach ($excludePrefixes as $excludePrefix) {
+                    if (!empty($route->prefix) && str_starts_with($route->prefix, $excludePrefix)) {
+                        return false;
+                    }
+                }
+                
+                return $this->isPublicRoute($route, $excludePatterns);
+            });
 
         // Get SEO data for these routes
         $seoRoutes = Routeseo::whereIn('route', $publicRoutes->pluck('uri'))
@@ -85,7 +95,7 @@ class SitemapController extends Controller
         $dynamicUrls = [];
         foreach ($publicRoutes as $route) {
             $seoData = $seoRoutes->get($route->uri);
-            
+
             $dynamicUrls[] = [
                 'url' => '/' . ltrim($route->uri, '/'),
                 'lastmod' => $route->updated_at ?? $route->created_at ?? now(),
@@ -95,6 +105,112 @@ class SitemapController extends Controller
         }
 
         return $dynamicUrls;
+    }
+
+    /**
+     * Check if a route is publicly accessible (doesn't require authentication).
+     */
+    private function isPublicRoute(MantaRoute $route, array $excludePatterns = []): bool
+    {
+        $uri = $route->uri;
+
+        // Exclude routes that match specific patterns
+        foreach ($excludePatterns as $pattern) {
+            if (fnmatch($pattern, $uri)) {
+                return false;
+            }
+        }
+
+        // Exclude routes that typically require authentication or are not SEO-friendly
+        $authPatterns = [
+            '*/dashboard*',
+            '*/profile*',
+            '*/settings*',
+            '*/account*',
+            '*/login*',
+            '*/register*',
+            '*/logout*',
+            '*/password*',
+            '*/verification*',
+            '*/verify*',
+            '*/reset*',
+            '*/confirm*',
+            '*/auth/*',
+            '*/user/*',
+            '*/member/*',
+            '*/private/*',
+            '*/secure/*',
+            '*/cms/*',
+            'cms/*',
+            'cms*',
+            '*/filemanager/*',
+            'filemanager/*',
+            'filemanager*',
+            '*/flux/*',
+            'flux/*',
+            'flux*',
+            '*/livewire/*',
+            'livewire/*',
+            'livewire*',
+            // Development/debug routes
+            'lemmings',
+            'up',
+            '*test*',
+            '*debug*',
+            '*dev*',
+            // Routes with parameters (not SEO-friendly)
+            '*{*}*',
+            '*/storage/*',
+            'storage/*',
+            // Dutch authentication terms
+            '*aanmelden*',
+            '*inloggen*',
+            '*uitloggen*',
+            '*wachtwoord*',
+            '*profiel*',
+            '*instellingen*',
+        ];
+
+        foreach ($authPatterns as $pattern) {
+            if (fnmatch($pattern, $uri)) {
+                return false;
+            }
+        }
+
+        // Check route name for authentication indicators
+        if ($route->name) {
+            $authNamePatterns = [
+                '*login*',
+                '*register*',
+                '*auth*',
+                '*dashboard*',
+                '*profile*',
+                '*settings*',
+                '*account*',
+                '*admin*',
+                '*cms*',
+                '*staff*',
+                '*member*',
+                '*user*',
+                '*private*',
+                '*secure*',
+                '*filemanager*',
+                '*flux*',
+                '*livewire*',
+                '*test*',
+                '*debug*',
+                '*dev*',
+                '*storage*',
+            ];
+
+            foreach ($authNamePatterns as $pattern) {
+                if (fnmatch($pattern, strtolower($route->name))) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**

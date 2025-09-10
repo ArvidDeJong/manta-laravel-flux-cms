@@ -44,7 +44,14 @@ return [
     */
     'dynamic_routes' => [
         'enabled' => true,
-        'exclude_prefixes' => ['cms', 'admin', 'staff', 'account'],
+        'exclude_prefixes' => ['cms', 'admin', 'staff', 'account', 'filemanager', 'flux', 'livewire'],
+        'exclude_patterns' => [
+            // Add custom patterns here to exclude specific routes
+            // Examples:
+            // '*/private/*',
+            // '*beta*',
+            // '*test*',
+        ],
         'default_changefreq' => 'weekly',
         'default_priority' => '0.8',
     ],
