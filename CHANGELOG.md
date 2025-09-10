@@ -17,10 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **OpenAI Image Gallery**: Improved conditional display of OpenAI images gallery
 - **Form Field List**: Updated styling and layout improvements
 - **Navigation**: Minor improvements to MantaNavList component
+- **Version Management**: Removed version field from `composer.json` for better package management
+- **Git Tags**: Standardized all version tags to use v-prefix format (v1.0.0, v1.1.0, etc.)
 
 ### Fixed
 - **WebflowImage Component**: Better handling of empty src values with fallback images
 - **OpenAI Images**: Fixed image gallery display logic to only show when images exist
+- **Version Conflicts**: Resolved inconsistent tag formats that could cause conflicts with package managers
 
 ## [1.1.8] - 2025-09-06
 

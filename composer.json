@@ -1,7 +1,6 @@
 {
     "name": "darvis/manta-laravel-flux-cms",
     "description": "Een Laravel Flux CMS package",
-    "version": "1.1.9",
     "type": "library",
     "license": "MIT",
     "authors": [
