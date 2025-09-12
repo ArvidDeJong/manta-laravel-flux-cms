@@ -170,6 +170,7 @@ trait MantaTrait
                     'url' => route($this->module_routes['read'], [$this->module_routes['name'] => $this->itemOrg, 'locale' => $value['locale']]),
                     'active' => $active,
                 ];
+
                 if ($active) {
                     $this->tablistModuleShow = $value['locale'];
                 }
@@ -183,6 +184,7 @@ trait MantaTrait
                 'url' => route($this->module_routes['read'], [$this->module_routes['name'] => $this->itemOrg]),
                 'active' => in_array(Route::currentRouteName(), [$this->module_routes['update'], $this->module_routes['read']]),
             ];
+
 
             if (in_array(Route::currentRouteName(), [$this->module_routes['update'], $this->module_routes['read']])) {
                 $this->tablistModuleShow = $this->tab_title ? $this->itemOrg->$tab_title : $this->itemOrg->title;
@@ -225,6 +227,7 @@ trait MantaTrait
         foreach ($extraTabs as $tab) {
             $tablist[] = $tab;
         }
+
 
         $this->tablistModule = array_merge($tablist,   $this->tablistModule);
     }
