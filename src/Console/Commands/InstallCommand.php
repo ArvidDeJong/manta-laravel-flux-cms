@@ -56,6 +56,9 @@ class InstallCommand extends Command
             $this->publishMigrations();
         }
 
+        // Step 6: Import core module settings
+        $this->importCoreModuleSettings();
+
         // Step 6: Synchronize routes
         $this->syncRoutes();
 
@@ -70,6 +73,32 @@ class InstallCommand extends Command
 
         $this->info('Flux CMS has been successfully installed!');
         $this->info('You can now view the dashboard at: ' . url(config('manta-cms.prefix', 'cms') . '/dashboard'));
+    }
+
+    /**
+     * Import core module settings
+     */
+    protected function importCoreModuleSettings(): void
+    {
+        $this->info('Importing core module settings...');
+
+        $params = [
+            'package' => 'darvis/manta-laravel-flux-cms',
+            '--all' => true,
+        ];
+
+        if ($this->option('force')) {
+            $params['--force'] = true;
+        }
+
+        try {
+            $this->call('manta:import-module-settings', $params);
+
+            $this->info('Core module settings imported successfully.');
+        } catch (\Exception $e) {
+            $this->warn('Core module settings import failed: ' . $e->getMessage());
+            $this->warn('You can run this manually: php artisan manta:import-module-settings darvis/manta-laravel-flux-cms --all');
+        }
     }
 
     /**
@@ -284,7 +313,7 @@ class InstallCommand extends Command
             $seeder = new CompanySeeder();
             $result = $seeder->run();
 
-            if ($result['action'] === 'created') {
+            if ($result['action'] === 'created' && isset($result['company'])) {
                 $this->info('✓ ' . $result['message']);
                 $this->info('  Company: ' . $result['company']->company);
                 $this->info('  Number: ' . $result['company']->number);
@@ -310,7 +339,7 @@ class InstallCommand extends Command
             $this->info('✓ Navigation items seeded successfully.');
             
             // Seed company navigation item
-            $this->call('manta:seed-company-navigation');
+            $this->call('manta:seed-company');
         } catch (\Exception $e) {
             $this->warn('Navigation seeding skipped: ' . $e->getMessage());
             $this->warn('You can manually run the MantaNavSeeder later if needed.');

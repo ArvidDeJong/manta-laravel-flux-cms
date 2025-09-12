@@ -1,13 +1,10 @@
 <flux:main container>
     <x-manta.breadcrumb :$breadcrumb />
-
     @include('manta-cms::livewire.default.manta-default-openai-form')
-
     @include('manta-cms::livewire.default.manta-default-tabs', [
         'tabs' => $tablistModule,
         'tablistShow' => $tablistModuleShow,
     ])
-
     <div class="mb-8"></div>
     @if (isset($fields['locale']['active']) &&
             $fields['locale']['active'] &&
@@ -19,6 +16,5 @@
         <flux:button size="sm" icon="globe-alt" wire:click="translate">Vul lege vertalingen</flux:button>
     @endif
     <br> <br>
-
     @include('manta-cms::includes.form_field_list')
 </flux:main>

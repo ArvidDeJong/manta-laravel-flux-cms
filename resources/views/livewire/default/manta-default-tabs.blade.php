@@ -1,7 +1,7 @@
   @if (isset($tablistModule) && count($tablistModule) > 1)
-      <flux:tabs class="mt-8 px-4" wire:model="tablistModuleShow">
+      <flux:tabs wire:model.live="tablistModuleShow" class="mb-8 mt-8">
           @foreach ($tablistModule as $tab)
-              <flux:tab name="{{ $tab['name'] }}"><a href="{{ $tab['url'] }}">{{ $tab['title'] }}</a>
+              <flux:tab name="{{ $tab['name'] }}" href="{{ $tab['url'] }}" label="{{ $tab['title'] }}">
                   @if (isset($tab['badge']))
                       <flux:badge>{{ $tab['badge'] }}</flux:badge>
                   @endif
