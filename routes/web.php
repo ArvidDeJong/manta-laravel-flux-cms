@@ -66,7 +66,7 @@ Route::middleware('web')
             return redirect()->route('flux-cms.staff.login');
         })->name('login');
         Route::get('/staff/forgot-password', \Manta\FluxCMS\Livewire\AuthStaff\ForgotPassword::class)->name('staff.forgot-password');
-        Route::get('/staff/reset-password', \Manta\FluxCMS\Livewire\AuthStaff\ResetPassword::class)->name('staff.reset-password');
+        Route::get('/staff/reset-password/{token?}', \Manta\FluxCMS\Livewire\AuthStaff\ResetPassword::class)->name('staff.reset-password');
         Route::get('/staff/verify-email', \Manta\FluxCMS\Livewire\AuthStaff\VerifyEmail::class)->name('staff.verify-email');
         Route::get('/staff/logout', \Manta\FluxCMS\Livewire\AuthStaff\Logout::class)->name('staff.logout');
 
@@ -74,7 +74,7 @@ Route::middleware('web')
         Route::get('/account/login', \Manta\FluxCMS\Livewire\Auth\LoginForm::class)->name('account.login');
         // Route::get('/account/register', \Manta\FluxCMS\Livewire\Auth\Register::class)->name('account.register');
         Route::get('/account/forgot-password', \Manta\FluxCMS\Livewire\Auth\ForgotPassword::class)->name('account.forgot-password');
-        Route::get('/account/reset-password', \Manta\FluxCMS\Livewire\Auth\ResetPassword::class)->name('account.reset-password');
+        Route::get('/account/reset-password/{token?}', \Manta\FluxCMS\Livewire\Auth\ResetPassword::class)->name('account.reset-password');
         Route::get('/account/verify-email', \Manta\FluxCMS\Livewire\Auth\VerifyEmail::class)->name('account.verify-email');
         Route::get('/account/logout', \Manta\FluxCMS\Livewire\Auth\Logout::class)->name('account.logout');
 

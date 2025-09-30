@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-09-30
+
+### Fixed
+- **Route Issues**: Fixed `Route [logout] not defined` error in verify-email component by correcting route reference to `flux-cms.account.logout`
+- **Dependency Resolution**: Fixed `Unable to resolve dependency [Parameter #0 [ <required> $token ]]` error in ResetPassword components
+- **Password Reset Routes**: Added token parameter to reset-password routes for both staff and account authentication
+- **Component Flexibility**: Made token parameter optional in ResetPassword components with multiple fallback methods
+
+### Changed
+- **Reset Password Routes**: Updated routes to include optional token parameter:
+  - `/staff/reset-password/{token?}`
+  - `/account/reset-password/{token?}`
+- **ResetPassword Components**: Enhanced mount method to handle token from multiple sources (route, query, request)
+- **Authentication Flow**: Improved password reset functionality for both staff and user authentication
+
+### Technical Improvements
+- **Error Handling**: Better error handling in authentication components
+- **Route Consistency**: Standardized route patterns across staff and account authentication
+- **Component Robustness**: More flexible parameter handling in Livewire components
+
 ## [1.2.0] - 2025-09-30
 
 ### Added

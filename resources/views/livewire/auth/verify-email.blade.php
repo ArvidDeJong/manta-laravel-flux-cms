@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="mt-6 text-center text-sm">
-                        <flux:button tag="a" href="{{ route('logout') }}" color="link">
+                        <flux:button tag="a" href="{{ route('flux-cms.account.logout') }}" color="link">
                             Uitloggen
                         </flux:button>
                     </div>

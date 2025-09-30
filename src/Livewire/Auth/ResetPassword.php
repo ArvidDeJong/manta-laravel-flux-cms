@@ -23,10 +23,13 @@ class ResetPassword extends Component
         'password' => 'required|min:8|confirmed',
     ];
 
-    public function mount($token)
+    public function mount($token = null)
     {
-        $this->token = $token;
-        $this->email = request()->query('email', '');
+        $this->token = $token ?? request()->route('token') ?? request()->get('token') ?? '';
+        
+        if (request()->has('email')) {
+            $this->email = request()->get('email');
+        }
     }
 
     public function resetPassword()
