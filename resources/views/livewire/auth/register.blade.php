@@ -52,7 +52,7 @@
             </div>
 
             <flux:subheading class="text-center">
-                Heb je al een account? <flux:link href="{{ route('login') }}">Log hier in</flux:link>
+                Heb je al een account? <flux:link href="{{ route('flux-cms.account.login') }}">Log hier in</flux:link>
             </flux:subheading>
         </div>
     </div>

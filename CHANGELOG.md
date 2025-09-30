@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-09-30
+
+### Added
+- **Staff Authentication**: Enhanced staff existence checks and improved login logging for staff authentication
+- **Sitemap Filtering**: Uitgebreide route exclusies en patronen voor betere sitemap filtering
+- **Install Command**: Enhanced installation command with additional functionality
+
+### Changed
+- **Default Views**: Migrated default views to FluxUI components and improved layout structure
+- **Tabs Component**: Updated manta-default-tabs.blade.php with improved functionality
+- **MantaTrait**: Added new properties and methods for enhanced functionality
+- **WithSortingTrait**: Improved and optimized sorting functionality
+- **Authentication Views**: Updated auth views (login, register, forgot-password, reset-password) to use FluxUI components
+
+### Improved
+- **Layout Structure**: Better organization of default view components
+- **Component Architecture**: Enhanced separation of concerns in authentication components
+- **Performance**: Optimized WithSortingTrait for better performance
+
+### Technical Improvements
+- **FluxUI Migration**: Systematic migration from legacy components to FluxUI
+- **Code Organization**: Better structure for authentication and default view components
+- **Trait Optimization**: Improved efficiency in sorting and authentication traits
+
 ## [1.1.9] - 2025-09-10
 
 ### Added

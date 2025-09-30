@@ -54,7 +54,7 @@ class ResetPassword extends Component
         if ($status === Password::PASSWORD_RESET) {
             session()->flash('status', __('Wachtwoord is succesvol gereset. Je kunt nu inloggen met je nieuwe wachtwoord.'));
 
-            return redirect()->route('login');
+            return redirect()->route('flux-cms.account.login');
         }
 
         $this->addError('email', __('Er is een probleem opgetreden bij het resetten van je wachtwoord.'));

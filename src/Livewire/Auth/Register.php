@@ -42,7 +42,7 @@ class Register extends Component
 
         // Redirect naar dashboard of verificatiepagina indien verificatie vereist is
         if (config('manta.user_verify')) {
-            return redirect()->route('verification.notice');
+            return redirect()->route('flux-cms.account.verify-email');
         } else {
             return redirect()->route(config('manta.user_home'));
         }

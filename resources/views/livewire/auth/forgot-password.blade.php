@@ -41,13 +41,10 @@
                     error="{{ $errors->first('email') }}" />
 
                 <div class="flex flex-col space-y-3">
-                    <flux:button variant="primary" class="w-full" wire:click="sendResetLink"
-                        wire:loading.attr="disabled">
-                        <span wire:loading.remove>Link versturen</span>
-                        <span wire:loading>Bezig met versturen...</span>
+                    <flux:button variant="primary" class="w-full" wire:click="sendResetLink">Link versturen
                     </flux:button>
 
-                    <flux:button variant="subtle" class="w-full" href="{{ route('login') }}">
+                    <flux:button variant="subtle" class="w-full" href="{{ route('flux-cms.account.login') }}">
                         Terug naar inloggen
                     </flux:button>
                 </div>

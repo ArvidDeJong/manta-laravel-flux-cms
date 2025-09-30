@@ -40,7 +40,7 @@
                     <div class="mb-3 flex justify-between">
                         <flux:label>Wachtwoord</flux:label>
 
-                        <flux:link href="{{ route('password.request') }}" variant="subtle" class="text-sm">Wachtwoord
+                        <flux:link href="{{ route('flux-cms.account.forgot-password') }}" variant="subtle" class="text-sm">Wachtwoord
                             vergeten?</flux:link>
                     </div>
 
@@ -55,9 +55,9 @@
                 </flux:button>
             </div>
 
-            @if (config('manta.user_register') && Route::has('register'))
+            @if (config('manta.user_register') && Route::has('flux-cms.account.register'))
                 <flux:subheading class="text-center">
-                    Eerste keer hier? <flux:link href="{{ route('register') }}">Registreer gratis</flux:link>
+                    Eerste keer hier? <flux:link href="{{ route('flux-cms.account.register') }}">Registreer gratis</flux:link>
                 </flux:subheading>
             @endif
         </div>

@@ -49,7 +49,7 @@
             </div>
 
             <flux:subheading class="text-center">
-                <flux:link href="{{ route('login') }}">Terug naar inloggen</flux:link>
+                <flux:link href="{{ route('flux-cms.account.login') }}">Terug naar inloggen</flux:link>
             </flux:subheading>
         </div>
     </div>
