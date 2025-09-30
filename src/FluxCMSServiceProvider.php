@@ -68,6 +68,8 @@ class FluxCMSServiceProvider extends ServiceProvider
         // Registreer middleware
         $this->registerMiddleware();
 
+        // Authentication redirects worden geconfigureerd via het install command
+
         // Laad vertaalbestanden
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'manta-cms');
 
@@ -426,4 +428,5 @@ class FluxCMSServiceProvider extends ServiceProvider
         Livewire::component('manta-cms::routeseo.list', \Manta\FluxCMS\Livewire\Routeseo\RouteseoList::class);
         Livewire::component('manta-cms::routeseo.update', \Manta\FluxCMS\Livewire\Routeseo\RouteseoUpdate::class);
     }
+
 }

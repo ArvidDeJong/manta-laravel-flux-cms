@@ -286,6 +286,36 @@ getLocalesManta(); // Alle locales
 <x-manta.nav />
 ```
 
+## Documentatie
+
+Voor uitgebreide documentatie, zie de volgende bestanden:
+
+### Installatie & Configuratie
+- [Installation Guide](installation.md) - Complete installatie instructies
+- [Configuration](configuration.md) - Configuratie opties en instellingen
+- [Authentication](authentication.md) - Dual authentication systeem (Staff & Account)
+
+### Functionaliteiten
+- [Features Overview](features.md) - Overzicht van alle functies
+- [Livewire Components](livewire-components.md) - Beschikbare Livewire componenten
+- [Blade Components](blade-components.md) - Herbruikbare Blade componenten
+- [Models](models.md) - Database modellen en relaties
+
+### SEO & Content
+- [SEO Traits](seo-trait.md) - SEO functionaliteit voor componenten
+- [HasSeo Trait](has-seo-trait.md) - SEO trait voor modellen
+- [SEO Traits Comparison](seo-traits-comparison.md) - Vergelijking tussen SEO traits
+- [Webflow Integration](webflow.md) - Webflow integratie
+
+### Ontwikkeling
+- [Development Guide](development.md) - Development setup en guidelines
+- [Commands](commands.md) - Beschikbare Artisan commando's
+- [Helpers](helpers.md) - Helper functies en utilities
+- [Mail](mail.md) - Email configuratie en templates
+
+### Troubleshooting
+- [Troubleshooting Guide](troubleshooting.md) - Oplossingen voor veelvoorkomende problemen
+
 ## Development
 
 ### Testing

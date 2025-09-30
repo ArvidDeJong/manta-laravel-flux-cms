@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2025-09-30
+
+### Added
+- **Install Command Enhancement**: Added automatic authentication redirect configuration in `bootstrap/app.php`
+- **Smart Route Detection**: Install command now automatically configures different login redirects based on route patterns
+- **Guard-Specific Redirects**: Automatic redirect to staff login for CMS routes and account login for user routes
+
+### Improved
+- **Installation Process**: Enhanced `manta:install` command with automatic authentication middleware configuration
+- **Developer Experience**: Reduced manual configuration steps during package installation
+- **Route Management**: Intelligent routing based on request patterns (cms/*, medewerkers/*, bedrijven/*)
+
+### Technical Improvements
+- **Bootstrap Configuration**: Automatic modification of `bootstrap/app.php` with proper middleware setup
+- **Error Handling**: Graceful fallback with manual instructions if automatic configuration fails
+- **Duplicate Prevention**: Smart detection to prevent duplicate configuration entries
+
 ## [1.2.1] - 2025-09-30
 
 ### Fixed

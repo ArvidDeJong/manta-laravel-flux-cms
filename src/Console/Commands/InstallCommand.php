@@ -56,10 +56,13 @@ class InstallCommand extends Command
             $this->publishMigrations();
         }
 
-        // Step 6: Import core module settings
+        // Step 6: Configure authentication redirects
+        $this->configureAuthenticationRedirects();
+
+        // Step 7: Import core module settings
         $this->importCoreModuleSettings();
 
-        // Step 6: Synchronize routes
+        // Step 8: Synchronize routes
         $this->syncRoutes();
 
         // Step 7: Clear cache
@@ -367,6 +370,64 @@ class InstallCommand extends Command
         } catch (\Exception $e) {
             $this->warn('Staff user seeding skipped: ' . $e->getMessage());
             $this->warn('You can manually run the StaffSeeder later if needed.');
+        }
+    }
+
+    /**
+     * Configure authentication redirects in bootstrap/app.php
+     */
+    protected function configureAuthenticationRedirects()
+    {
+        $this->info('Configuring authentication redirects...');
+
+        $bootstrapPath = base_path('bootstrap/app.php');
+        
+        if (!File::exists($bootstrapPath)) {
+            $this->warn('bootstrap/app.php not found. Skipping authentication redirect configuration.');
+            return;
+        }
+
+        $content = File::get($bootstrapPath);
+
+        // Check if authentication redirects are already configured
+        if (strpos($content, 'redirectGuestsTo') !== false) {
+            $this->info('Authentication redirects are already configured.');
+            return;
+        }
+
+        // Find the withMiddleware section and add the redirect configuration
+        $middlewarePattern = '/->withMiddleware\(function \(Middleware \$middleware\) \{([^}]*)\}\)/s';
+        
+        if (preg_match($middlewarePattern, $content, $matches)) {
+            $middlewareContent = $matches[1];
+            
+            // Add authentication redirect configuration
+            $newMiddlewareContent = $middlewareContent . '
+        // Configure authentication redirects for different guards
+        $middleware->redirectGuestsTo(function ($request) {
+            // Check if the request is for staff routes (CMS routes)
+            if ($request->is(\'cms/*\') || $request->is(\'medewerkers/*\') || $request->is(\'bedrijven/*\')) {
+                return route(\'flux-cms.staff.login\');
+            }
+            
+            // Default redirect for regular users
+            return route(\'flux-cms.account.login\');
+        });
+';
+
+            $newContent = str_replace($matches[0], "->withMiddleware(function (Middleware \$middleware) {{$newMiddlewareContent}    })", $content);
+            
+            File::put($bootstrapPath, $newContent);
+            $this->info('✓ Authentication redirects configured successfully.');
+        } else {
+            $this->warn('Could not find withMiddleware section in bootstrap/app.php. Please configure authentication redirects manually.');
+            $this->info('Add this to your bootstrap/app.php withMiddleware section:');
+            $this->info('$middleware->redirectGuestsTo(function ($request) {');
+            $this->info('    if ($request->is(\'cms/*\') || $request->is(\'medewerkers/*\') || $request->is(\'bedrijven/*\')) {');
+            $this->info('        return route(\'flux-cms.staff.login\');');
+            $this->info('    }');
+            $this->info('    return route(\'flux-cms.account.login\');');
+            $this->info('});');
         }
     }
 }

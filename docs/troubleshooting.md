@@ -208,6 +208,129 @@ php artisan migrate
    });
    ```
 
+## Authentication Problems
+
+### Route [login] not defined
+
+**Problem:** `RouteNotFoundException: Route [login] not defined`
+
+**Solution:**
+This happens when authentication redirects are not properly configured.
+
+1. **Automatic fix:** Run the install command to configure redirects:
+   ```bash
+   php artisan manta:install --force
+   ```
+
+2. **Manual fix:** Add authentication redirects to `bootstrap/app.php`:
+   ```php
+   ->withMiddleware(function (Middleware $middleware) {
+       $middleware->redirectGuestsTo(function ($request) {
+           // CMS routes redirect to staff login
+           if ($request->is('cms/*') || $request->is('medewerkers/*') || $request->is('bedrijven/*')) {
+               return route('flux-cms.staff.login');
+           }
+           
+           // All other routes redirect to account login
+           return route('flux-cms.account.login');
+       });
+   })
+   ```
+
+3. **Clear caches:**
+   ```bash
+   php artisan route:clear
+   php artisan config:clear
+   ```
+
+### Route [password.request] not defined
+
+**Problem:** `RouteNotFoundException: Route [password.request] not defined`
+
+**Solution:**
+This is caused by outdated route references in authentication views.
+
+1. **Check if package is up to date:**
+   ```bash
+   composer update darvis/manta-laravel-flux-cms
+   ```
+
+2. **Clear view cache:**
+   ```bash
+   php artisan view:clear
+   ```
+
+3. **Re-publish views if customized:**
+   ```bash
+   php artisan vendor:publish --provider="Manta\FluxCMS\FluxCMSServiceProvider" --tag="views" --force
+   ```
+
+### Staff Login Issues
+
+**Problem:** Cannot log in to CMS, no staff users exist
+
+**Solution:**
+1. **Check if staff users exist:**
+   ```bash
+   php artisan tinker
+   >>> Manta\FluxCMS\Models\Staff::count()
+   ```
+
+2. **Create a staff user:**
+   ```bash
+   php artisan manta:create-staff --email=admin@example.com --password=secure-password
+   ```
+
+3. **Check if staff users are active:**
+   ```bash
+   php artisan tinker
+   >>> Manta\FluxCMS\Models\Staff::where('active', true)->count()
+   ```
+
+### Authentication Guard Issues
+
+**Problem:** `Auth guard [staff] is not defined`
+
+**Solution:**
+1. **Check auth configuration:**
+   ```bash
+   php artisan config:show auth.guards.staff
+   ```
+
+2. **Clear config cache:**
+   ```bash
+   php artisan config:clear
+   ```
+
+3. **Verify ServiceProvider is registered:**
+   ```bash
+   php artisan config:show app.providers | grep FluxCMS
+   ```
+
+### Session Issues
+
+**Problem:** Users get logged out immediately or sessions don't persist
+
+**Solution:**
+1. **Check session configuration in `.env`:**
+   ```env
+   SESSION_DRIVER=file
+   SESSION_LIFETIME=120
+   SESSION_ENCRYPT=false
+   SESSION_PATH=/
+   SESSION_DOMAIN=null
+   ```
+
+2. **Clear session files:**
+   ```bash
+   rm -rf storage/framework/sessions/*
+   ```
+
+3. **Check session directory permissions:**
+   ```bash
+   chmod -R 755 storage/framework/sessions/
+   ```
+
 ## Cache Problems
 
 ### Stale Cache
