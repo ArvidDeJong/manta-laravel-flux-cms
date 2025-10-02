@@ -23,7 +23,7 @@ class Logout extends Component
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route(config('manta.user_home', 'website.homepage'));
+        return redirect()->route(config('manta.user_home', 'website.home'));
     }
 
     public function render()
